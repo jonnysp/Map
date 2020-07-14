@@ -6,52 +6,85 @@ class MapViewer extends ContentElement
 
 	public function generate()
 	{
-//		if (TL_MODE == 'BE')
-//		{
-//			$objCat = \MapModel::findByPK($this->map);
-//			$objTemplate = new \BackendTemplate('be_wildcard');
-//			$objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['tl_content']['map_legend']) . ' ###';
-//			$objTemplate->title = '['. $objCat->id.'] - '. $objCat->title;
-//			return $objTemplate->parse();	
+		if (TL_MODE == 'BE')
+		{
+			$objMap = \MapModel::findByPK($this->map);
+			$objTemplate = new \BackendTemplate('be_wildcard');
+			$objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['tl_content']['map_legend']) . ' ###';
+			$objTemplate->title = '['. $objMap->id.'] - '. $objMap->title;
+			return $objTemplate->parse();	
 		}
 		return parent::generate();
 	}//end generate
 
 	protected function compile()
 	{
-//		global $objPage;
-//		$this->loadLanguageFile('tl_recipes');
-//		$this->loadLanguageFile('tl_recipes_categories');
-//
-//		//gets the categorie
-//		$objCategorie = \RecipesCategoriesModel::findByPK($this->recipescategorie);
-//		
-//		$Recipes = array();
-//
-//		$filterRecipes = \RecipesModel::findAll(
-//			array('column' => array('pid=?','published=?'),'value' => array($this->recipescategorie,1) ,'order' => 'sorting')
-//		);
-//
-//		//get Categorie data
-//		$CategorieImage = \FilesModel::findByPk($objCategorie->image);
-//		$Categorie = array(
-//			id => $objCategorie->id,
-//			title => $objCategorie->title,
-//			description => $objCategorie->description,
-//			image => array(
-//					meta => $this->getMetaData($CategorieImage->meta, $objPage->language),
-//					path => $CategorieImage->path,
-//					name => $CategorieImage->name,
-//					extension => $CategorieImage->extension
-//				)
-//		);
-//
+
+		global $objPage;
+		$this->loadLanguageFile('tl_map');
+		$this->loadLanguageFile('tl_map_points');
+
+		//gets the categorie
+		$objMap = \MapModel::findByPK($this->map);
+
+		if(isset($objMap->api_key)){
+			$GLOBALS['TL_JAVASCRIPT'][] = '//maps.google.com/maps/api/js?key='.$objMap->api_key.'&amp;sensor=false&amp;language='.$objPage->language;
+		}else{
+			$GLOBALS['TL_JAVASCRIPT'][] = '//maps.google.com/maps/api/js?sensor=false&amp;language='.$objPage->language;
+		}
+
+		$Map= array(
+			id => $objMap->id,
+			title => $objMap->title,
+			description => $objMap->description,
+			api_key => $objMap->api_key,
+			height => $objMap->height,
+			stylearray => $objMap->stylearray
+		);
+
+		$this->Template->Map = $Map;
+
+		$filter = array('column' => array('pid=?','published=?'),'value' => array($objMap->id,1));
+		$objPoints = \MapPointsModel::findAll($filter);
+
+		$points = array();	
+
+
+		foreach ($objPoints as $key => $value) {
+
+			try
+			{
+				$position = unserialize($value->position);
+			}
+			catch (Exception $e)
+			{
+				$position = array();
+			}
+
+
+			$points[$key] = array(
+				title => $value->title,
+				image => \FilesModel::findByPk($value->image)->path,
+				latitude  => $position[0],
+				longitude  => $position[1],
+				description =>  $value->description,
+				info => boolval($value->info)
+			);
+		}
+		
+
+
+
+
+
+
+
 //		//get Recipes data
 //		if (count($filterRecipes) > 0){
 //			foreach ($filterRecipes as $key => $value) {
 //
 //				//main Image
-//				$RecipeImage = \FilesModel::findByPk($value->image);
+//				
 //				
 //				//additional sorted Images
 //				$RecipeImages = array();
@@ -97,8 +130,9 @@ class MapViewer extends ContentElement
 //				);
 //			}
 //		}
-//
-//		$this->Template->RecipesCategorie = $Categorie;
+
+
+		$this->Template->Points = $points;
 //		$this->Template->Recipes = $Recipes;
 
 	}//end compile

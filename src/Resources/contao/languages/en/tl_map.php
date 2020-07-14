@@ -3,28 +3,28 @@
 /**
  * Fields
  */
-$GLOBALS['TL_LANG']['tl_recipes_categories']['title']       = array('Rezept Kategorie Name', 'Geben Sie hier den Kategorienamen ein.');
-$GLOBALS['TL_LANG']['tl_recipes_categories']['image']       = array('Rezept Kategorie Bild', 'Kategorie Bild.');
-$GLOBALS['TL_LANG']['tl_recipes_categories']['description'] = array('Rezept Kategorie Beschreibung', 'Kategoriebeschreibung.');
+$GLOBALS['TL_LANG']['tl_map']['title']       = array('Map Name', 'Geben Sie hier den Mapnamen ein.');
+$GLOBALS['TL_LANG']['tl_map']['description'] = array('Map Beschreibung', 'Mapbeschreibung.');
+$GLOBALS['TL_LANG']['tl_map']['api_key'] = array('GoogleMaps ApiKey', 'https://developers.google.com/maps/documentation/javascript/get-api-key');
+$GLOBALS['TL_LANG']['tl_map']['height'] =  array('Map Höhe', 'Höhe');
+$GLOBALS['TL_LANG']['tl_map']['stylearray'] =  array('Mapstyle JSON array', 'https://mapstyle.withgoogle.com/');
+
 
 
 /**
  * Legends
  */
-$GLOBALS['TL_LANG']['tl_recipes_categories']['title_legend'] = 'Rezept Grundeinstellungen';
-$GLOBALS['TL_LANG']['tl_recipes_categories']['image_legend'] = 'Rezept Kategorie Bild';
+$GLOBALS['TL_LANG']['tl_map']['title_legend'] = 'Map Grundeinstellungen';
+$GLOBALS['TL_LANG']['tl_map']['description_legend'] = 'Map Beschreibung';
 
 
 /**
  * Buttons
  */
-$GLOBALS['TL_LANG']['tl_recipes_categories']['new']        = array('Neue Rezept Kategorie', 'Eine neue Rezept Kategorie anlegen');
-$GLOBALS['TL_LANG']['tl_recipes_categories']['show']       = array('Rezept Kategorie details', 'Details der Rezept Kategorie ID %s anzeigen');
-$GLOBALS['TL_LANG']['tl_recipes_categories']['edit']       = array('Rezepte bearbeiten', 'Rezepte in Kategorie ID %s bearbeiten');
-$GLOBALS['TL_LANG']['tl_recipes_categories']['editheader'] = array('Rezept Kategorie bearbeiten', 'Rezept Kategorie ID %s bearbeiten');
-$GLOBALS['TL_LANG']['tl_recipes_categories']['copy']       = array('Rezept Kategorie kopieren', 'Rezept Kategorie ID %s kopieren');
-$GLOBALS['TL_LANG']['tl_recipes_categories']['delete']     = array('Rezept Kategorie löschen','Rezept Kategorie ID %s löschen');
-
-
-
+$GLOBALS['TL_LANG']['tl_map']['new']        = array('Neue Map', 'Eine neue Map anlegen');
+$GLOBALS['TL_LANG']['tl_map']['show']       = array('Map details', 'Details der Map ID %s anzeigen');
+$GLOBALS['TL_LANG']['tl_map']['edit']       = array('Map-Points bearbeiten', 'Map-Points auf Map ID %s bearbeiten');
+$GLOBALS['TL_LANG']['tl_map']['editheader'] = array('Map bearbeiten', 'Map ID %s bearbeiten');
+$GLOBALS['TL_LANG']['tl_map']['copy']       = array('Map kopieren', 'Map ID %s kopieren');
+$GLOBALS['TL_LANG']['tl_map']['delete']     = array('Map löschen','Map ID %s löschen');
 

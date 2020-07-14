@@ -94,7 +94,7 @@ $GLOBALS['TL_DCA']['tl_map_points'] = array
 	// Palettes
 	'palettes' => array
 	(
-		'default'                     => '{title_legend},title,published;{title_images},image,images;{title_description},description,ingredients,preparation,tags'
+		'default'                     => '{title_legend},title,published;{image_legend},image;{description_legend},info,description,position;'
 	),
 
 	// Fields
@@ -131,42 +131,27 @@ $GLOBALS['TL_DCA']['tl_map_points'] = array
 			'eval'                    => array('fieldType'=>'radio', 'files'=>true, 'filesOnly'=>true, 'extensions'=>$GLOBALS['TL_CONFIG']['validImageTypes']),
 			'sql'                     => ['type' => 'binary','notnull' => false,'length' => 16,'fixed' => true]
 		),
-		'images' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_map_points']['images'],
-			'inputType'               => 'fileTree',
-			'eval'                    => array('multiple'=>true, 'fieldType'=>'checkbox', 'orderField'=>'imagessort', 'files'=>true,'tl_class'=>'long clr','filesOnly'=>true, 'extensions'=>$GLOBALS['TL_CONFIG']['validImageTypes']),
-			'sql'                     => ['type' => 'blob','notnull' => false],
-			'load_callback' => array
-			(
-				array('tl_map_points', 'setFileTreeFlags')
-			)
-		),
-		'imagessort' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_products']['imagessort'],
-			'sql'                     => ['type' => 'blob','notnull' => false]
-		),
 		'description' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_map_points']['description'],
 			'inputType'               => 'textarea',
-			'eval'                    => array('rte'=>'tinyMCE','tl_class'=>'clr'),
-			'sql'                     => ['type' => 'text','notnull' => false]
+			'eval'                    => array('allowHtml'=>true, 'class'=>'monospace', 'rte'=>'ace|html', 'tl_class'=>'clr'),
+			'sql'                     => "text NULL"
 		),
-		'ingredients' => array
+		'info' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_map_points']['ingredients'],
-			'inputType'               => 'textarea',
-			'eval'                    => array('rte'=>'tinyMCE','tl_class'=>'clr'),
-			'sql'                     => ['type' => 'text','notnull' => false]
+			'label'                   => &$GLOBALS['TL_LANG']['tl_map_points']['info'],
+			'inputType'               => 'checkbox',
+			'isBoolean'				  => true,
+			'eval'                    => array( 'tl_class'=>'w50'),
+			'sql'                     => "char(1) NOT NULL default ''"
 		),
-		'preparation' => array
+		'position' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_map_points']['preparation'],
-			'inputType'               => 'textarea',
-			'eval'                    => array('rte'=>'tinyMCE','tl_class'=>'clr'),
-			'sql'                     => ['type' => 'text','notnull' => false]
+			'label'                   => &$GLOBALS['TL_LANG']['tl_map_points']['position'],
+			'inputType'           	  => 'positionselectorfield',
+			'eval'                    => array('rgxp'=>'digit', 'tl_class'=>'clr', 'nospace'=>false),
+			'sql'					  => "varchar(128) NOT NULL default ''"
 		),
 		'published' => array
 		(

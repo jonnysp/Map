@@ -1,0 +1,84 @@
+
+<?php if ($this->Map['title']): ?>
+		<h1><?= $this->Map['title'] ?></h1>
+<?php endif; ?>
+
+<?= $this->Map['description']; ?>
+
+
+<div id="map_<?= $this->id; ?>" style="width:100%;height: <?= $this->Map['height'] ?>"></div>
+
+<script type="text/javascript">
+
+	var minzoom = 3, maxzoom = 4, limitzoom = true, map, bounds;
+
+
+	<?php if ($this->Map['stylearray']): ?>
+	var styleArray=<?=$this->Map['stylearray'] ?>;
+	<?php endif; ?>
+
+	var points = <?= json_encode($this->Points) ?>;
+
+
+
+	$(function(){
+		bounds = new google.maps.LatLngBounds();
+
+		if (typeof styleArray !== "undefined") {
+			var myOptions = {
+				zoom: minzoom,
+				mapTypeControlOptions: {
+					mapTypeIds: [google.maps.MapTypeId.ROADMAP, "map_style"]
+				},
+				disableDefaultUI: true
+			};
+		}else{
+			var myOptions = {
+				  zoom: minzoom,
+				  mapTypeId: google.maps.MapTypeId.TERRAIN,
+				  disableDefaultUI: true
+			};
+		}
+
+		map = new google.maps.Map(document.getElementById("map_<?= $this->id; ?>"), myOptions);
+
+		if (typeof styleArray !== "undefined") {
+			var styledMap = new google.maps.StyledMapType(styleArray,{name: "Styled Map"});
+			map.mapTypes.set("map_style", styledMap);
+			map.setMapTypeId("map_style");
+		}
+
+
+
+		$(points).each(function(){
+			if(this["latitude"] && this["longitude"]){
+				var po = new google.maps.LatLng(parseFloat(this["latitude"]),parseFloat(this["longitude"]));
+				var marker = createMarker( po,this["image"] ,this["title"], this["info"], this["description"]);
+				bounds.extend(po);
+			}
+		});
+
+		map.fitBounds(bounds);
+
+
+	});
+
+	var infowindow = new google.maps.InfoWindow();
+
+	function createMarker(latlng, img ,title, info , description) {
+		var marker = new google.maps.Marker({position: latlng, map: map, icon: img,title :title});
+			
+		google.maps.event.addListener(marker, "click", function() {
+		
+			if(info == true){
+				infowindow.setContent(description);
+				infowindow.open(map,marker);
+			}
+
+			map.setCenter(latlng);
+			map.setZoom(maxzoom);
+		});
+		return marker;
+	}
+
+</script>

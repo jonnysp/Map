@@ -1,6 +1,6 @@
 <?php
 
-$GLOBALS['TL_LANG']['MOD']['recipes'] = array('Rezepte Verwaltung');
-$GLOBALS['TL_LANG']['MOD']['recipescategorie'] = array('Rezepte','Verwalte die Rezepte');
+$GLOBALS['TL_LANG']['MOD']['map'] = array('Map Verwaltung');
+$GLOBALS['TL_LANG']['MOD']['map'] = array('Map','Verwalte die Maps');
 
-$GLOBALS['TL_LANG']['CTE']['recipescategorie_viewer'] = array("Rezept-Kategorie","");
+$GLOBALS['TL_LANG']['CTE']['map_viewer'] = array("Map","");

@@ -52,7 +52,7 @@ $GLOBALS['TL_DCA']['tl_map'] = array
 			'edit' => array
 			(
 				'label'               => &$GLOBALS['TL_LANG']['tl_map']['edit'],
-				'href'                => 'table=tl_recipes',
+				'href'                => 'table=tl_map_points',
 				'icon'                => 'edit.svg'
 			),
 			'editheader' => array
@@ -86,7 +86,7 @@ $GLOBALS['TL_DCA']['tl_map'] = array
 	// Palettes
 	'palettes' => array
 	(
-		'default'                     => '{title_legend},title;{image_legend},image,description;'
+		'default'                     => '{title_legend},title,api_key,height,stylearray;{description_legend},description;'
 	),
 
 	// Fields
@@ -105,15 +105,15 @@ $GLOBALS['TL_DCA']['tl_map'] = array
 			'label'                   => &$GLOBALS['TL_LANG']['tl_map']['title'],
 			'search'                  => true,
 			'inputType'               => 'text',
-			'eval'                    => array('mandatory'=>true, 'maxlength'=>128, 'tl_class'=>'w50'),
+			'eval'                    => array('mandatory'=>true, 'maxlength'=>128, 'tl_class'=>'w50 clr'),
 			'sql'                     => "varchar(128) NOT NULL default ''"
 		),
-		'image' => array
+		'api_key' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_map']['image'],
-			'inputType'               => 'fileTree',
-			'eval'                    => array('fieldType'=>'radio', 'files'=>true, 'filesOnly'=>true, 'extensions'=>$GLOBALS['TL_CONFIG']['validImageTypes']),
-			'sql'                     => "binary(16) NULL",
+			'label'                   => &$GLOBALS['TL_LANG']['tl_map']['api_key'],
+			'inputType'               => 'text',
+			'eval'                    => array('maxlength'=>128, 'tl_class'=>'w50'),
+			'sql'                     => "varchar(128) NOT NULL default ''"
 		),
 		'description' => array
 		(
@@ -121,7 +121,22 @@ $GLOBALS['TL_DCA']['tl_map'] = array
 			'inputType'               => 'textarea',
 			'eval'                    => array('rte'=>'tinyMCE'),
 			'sql'                     => "text NULL"
+		),
+		'height' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_map']['height'],
+			'inputType'               => 'text',
+			'eval'                    => array('tl_class'=>'clr'),
+			'sql'                     => "varchar(128)  NOT NULL default '400px'"
+		),
+		'stylearray' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_map']['stylearray'],
+			'inputType'               => 'textarea',
+			'eval'                    => array('allowHtml'=>true, 'class'=>'monospace', 'rte'=>'ace|html', 'tl_class'=>'clr'),
+			'sql'                     => "text NULL"
 		)
+
 	)
 );
 

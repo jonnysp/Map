@@ -8,6 +8,9 @@
  * @license LGPL-3.0+
  */
 
+
+
+
 array_insert($GLOBALS['BE_MOD']['map'], 100, array
 (
 	'map' 		=> array('tables' => array('tl_map', 'tl_map_points'))
@@ -20,6 +23,7 @@ array_insert($GLOBALS['BE_MOD']['map'], 100, array
 if (TL_MODE == 'BE')
 {
 	$GLOBALS['TL_CSS'][] = 'bundles/jonnyspmap/map.css|static';
+	$GLOBALS['BE_FFL']['positionselectorfield'] = 'PositionSelectorField';
 }
 
 
