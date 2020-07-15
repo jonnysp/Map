@@ -10,21 +10,18 @@
 
 <script type="text/javascript">
 
-	var minzoom = 3, maxzoom = 4, limitzoom = true, map, bounds;
+	var minzoom = 3, maxzoom = 4, map;
 
 
-	<?php if ($this->Map['stylearray']): ?>
-	var styleArray=<?=$this->Map['stylearray'] ?>;
-	<?php endif; ?>
 
 	var points = <?= json_encode($this->Points) ?>;
 
 
 
 	$(function(){
-		bounds = new google.maps.LatLngBounds();
 
-		if (typeof styleArray !== "undefined") {
+		//Options
+		<?php if ($this->Map['maptype'] == 'user'): ?>
 			var myOptions = {
 				zoom: minzoom,
 				mapTypeControlOptions: {
@@ -32,36 +29,54 @@
 				},
 				disableDefaultUI: true
 			};
-		}else{
+		<?php else: ?>
 			var myOptions = {
 				  zoom: minzoom,
-				  mapTypeId: google.maps.MapTypeId.TERRAIN,
+				  mapTypeId: '<?=$this->Map['maptype'] ?>',
 				  disableDefaultUI: true
 			};
-		}
+		<?php endif; ?>
 
 		map = new google.maps.Map(document.getElementById("map_<?= $this->id; ?>"), myOptions);
 
-		if (typeof styleArray !== "undefined") {
-			var styledMap = new google.maps.StyledMapType(styleArray,{name: "Styled Map"});
+
+
+		var bounds = new google.maps.LatLngBounds();
+		
+
+ 		<?php if ($this->Map['autozoom'] == false || count($this->Points) == 0): ?>
+ 			map.setCenter(new google.maps.LatLng(parseFloat(<?=$this->Map['latitude'] ?>),parseFloat(<?=$this->Map['longitude'] ?>)));
+			map.setZoom(<?=$this->Map['zoom'] ?>);
+ 		<?php endif; ?>
+
+
+		//set the style array		
+		<?php if ($this->Map['maptype'] == 'user'): ?>
+			var styledMap = new google.maps.StyledMapType(<?=$this->Map['stylearray'] ?>,{name: "Styled Map"});
 			map.mapTypes.set("map_style", styledMap);
 			map.setMapTypeId("map_style");
-		}
-
+		<?php endif; ?>
 
 
 		$(points).each(function(){
 			if(this["latitude"] && this["longitude"]){
 				var po = new google.maps.LatLng(parseFloat(this["latitude"]),parseFloat(this["longitude"]));
 				var marker = createMarker( po,this["image"] ,this["title"], this["info"], this["description"]);
-				bounds.extend(po);
+
+				<?php if ($this->Map['autozoom'] == true && count($this->Points) > 0): ?>
+					bounds.extend(po);
+				<?php endif; ?>
+		
 			}
 		});
 
-		map.fitBounds(bounds);
-
+		<?php if ($this->Map['autozoom'] == true && count($this->Points) > 0): ?>
+			map.fitBounds(bounds);
+		<?php endif; ?>
+		
 
 	});
+
 
 	var infowindow = new google.maps.InfoWindow();
 
@@ -69,16 +84,19 @@
 		var marker = new google.maps.Marker({position: latlng, map: map, icon: img,title :title});
 			
 		google.maps.event.addListener(marker, "click", function() {
-		
 			if(info == true){
 				infowindow.setContent(description);
 				infowindow.open(map,marker);
 			}
-
 			map.setCenter(latlng);
 			map.setZoom(maxzoom);
 		});
+
 		return marker;
 	}
 
 </script>
+
+<?php 
+	//$this->showTemplateVars();
+?>

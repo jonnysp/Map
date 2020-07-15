@@ -33,13 +33,27 @@ class MapViewer extends ContentElement
 			$GLOBALS['TL_JAVASCRIPT'][] = '//maps.google.com/maps/api/js?sensor=false&amp;language='.$objPage->language;
 		}
 
+		try
+		{
+			$mapposition = unserialize($objMap->position);
+		}
+		catch (Exception $e)
+		{
+			$mapposition = array();
+		}
+
 		$Map= array(
 			id => $objMap->id,
 			title => $objMap->title,
 			description => $objMap->description,
 			api_key => $objMap->api_key,
 			height => $objMap->height,
-			stylearray => $objMap->stylearray
+			maptype => $objMap->maptype,
+			stylearray => $objMap->stylearray,
+			latitude  => $mapposition[0],
+			longitude  => $mapposition[1],
+			zoom  => $mapposition[2],
+			autozoom => $objMap->autozoom
 		);
 
 		$this->Template->Map = $Map;
@@ -60,7 +74,6 @@ class MapViewer extends ContentElement
 			{
 				$position = array();
 			}
-
 
 			$points[$key] = array(
 				title => $value->title,

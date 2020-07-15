@@ -83,11 +83,17 @@ $GLOBALS['TL_DCA']['tl_map'] = array
 		)
 	),
 
-	// Palettes
+
+// Palettes
 	'palettes' => array
 	(
-		'default'                     => '{title_legend},title,api_key,height,stylearray;{description_legend},description;'
+		'__selector__'  => array('maptype'),
+		'default'       => '{title_legend},title,api_key,height,maptype,autozoom;{description_legend},description,position;',
+		'user'          => '{title_legend},title,api_key,height,maptype,stylearray,autozoom;{description_legend},description,position;'
 	),
+
+
+
 
 	// Fields
 	'fields' => array
@@ -129,12 +135,38 @@ $GLOBALS['TL_DCA']['tl_map'] = array
 			'eval'                    => array('tl_class'=>'clr'),
 			'sql'                     => "varchar(128)  NOT NULL default '400px'"
 		),
+		'maptype' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_map']['maptype'],
+            'inputType'               => 'select',
+            'sorting'                 => true,
+            'flag'                    => 1,
+            'options'                 => array('user','roadmap','satellite','hybrid','terrain'),
+            'reference'               => &$GLOBALS['TL_LANG']['tl_map'],
+            'eval'                    => array('includeBlankOption' => false,'submitOnChange' => true,'tl_class'=> 'w50'),                
+            'sql'                     => "varchar(128) NOT NULL default 'roadmap'"
+        ),
 		'stylearray' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_map']['stylearray'],
 			'inputType'               => 'textarea',
 			'eval'                    => array('allowHtml'=>true, 'class'=>'monospace', 'rte'=>'ace|html', 'tl_class'=>'clr'),
 			'sql'                     => "text NULL"
+		),
+		'position' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_map']['position'],
+			'inputType'           	  => 'positionselectorfield',
+			'eval'                    => array('rgxp'=>'digit', 'tl_class'=>'clr', 'nospace'=>false),
+			'sql'					  => "varchar(128) NOT NULL default ''"
+		),
+		'autozoom' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_map']['autozoom'],
+			'inputType'               => 'checkbox',
+			'isBoolean'				  => true,
+			'eval'                    => array( 'tl_class'=>'w50'),
+			'sql'                     => "char(1) NOT NULL default ''"
 		)
 
 	)

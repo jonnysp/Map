@@ -7,7 +7,18 @@ $GLOBALS['TL_LANG']['tl_map']['title']       = array('Map Name', 'Geben Sie hier
 $GLOBALS['TL_LANG']['tl_map']['description'] = array('Map Beschreibung', 'Mapbeschreibung.');
 $GLOBALS['TL_LANG']['tl_map']['api_key'] = array('GoogleMaps ApiKey', 'https://developers.google.com/maps/documentation/javascript/get-api-key');
 $GLOBALS['TL_LANG']['tl_map']['height'] =  array('Map Höhe', 'Höhe');
-$GLOBALS['TL_LANG']['tl_map']['stylearray'] =  array('Mapstyle JSON array', 'https://mapstyle.withgoogle.com/');
+$GLOBALS['TL_LANG']['tl_map']['maptype']= array('MapType', 'https://developers.google.com/maps/documentation/javascript/maptypes');
+
+$GLOBALS['TL_LANG']['tl_map']['user'] 	= array('Stylearray','');
+$GLOBALS['TL_LANG']['tl_map']['roadmap'] 	= array('Straßen','');
+$GLOBALS['TL_LANG']['tl_map']['satellite'] 	= array('Sateliten','');
+$GLOBALS['TL_LANG']['tl_map']['hybrid'] 	= array('Hybrid','');
+$GLOBALS['TL_LANG']['tl_map']['terrain'] 	= array('Terrain','');
+
+$GLOBALS['TL_LANG']['tl_map']['stylearray'] =  array('Mapstyle JSON array', 'https://developers.google.com/maps/documentation/javascript/styling or https://mapstyle.withgoogle.com/');
+
+$GLOBALS['TL_LANG']['tl_map']['position'] = array('Position', 'Map Position.');
+$GLOBALS['TL_LANG']['tl_map']['autozoom'] = array('Autozoom', 'Auf Map-Point Zoomen.');
 
 
 

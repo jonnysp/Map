@@ -8,7 +8,9 @@ $GLOBALS['TL_LANG']['tl_map_points']['title']       = array('Map-Point Name', 'G
 $GLOBALS['TL_LANG']['tl_map_points']['image']       = array('Map-Point Bild', 'Map-Point Bild.');
 $GLOBALS['TL_LANG']['tl_map_points']['description'] = array('Beschreibung', 'Map-Point Beschreibung.');
 $GLOBALS['TL_LANG']['tl_map_points']['position'] = array('Position', 'Map-Point Position.');
+$GLOBALS['TL_LANG']['tl_map_points']['info'] 	 = array('Infobubble','An / Aus');
 $GLOBALS['TL_LANG']['tl_map_points']['toggle'] 	 = array('AN/AUS','An / Aus');
+
 
 
 /**
