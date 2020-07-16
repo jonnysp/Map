@@ -10,20 +10,16 @@
 
 <script type="text/javascript">
 
-	var minzoom = 3, maxzoom = 4, map;
-
-
+	var map;
 
 	var points = <?= json_encode($this->Points) ?>;
-
-
 
 	$(function(){
 
 		//Options
 		<?php if ($this->Map['maptype'] == 'user'): ?>
 			var myOptions = {
-				zoom: minzoom,
+				zoom: 3,
 				mapTypeControlOptions: {
 					mapTypeIds: [google.maps.MapTypeId.ROADMAP, "map_style"]
 				},
@@ -31,7 +27,7 @@
 			};
 		<?php else: ?>
 			var myOptions = {
-				  zoom: minzoom,
+				  zoom: 3,
 				  mapTypeId: '<?=$this->Map['maptype'] ?>',
 				  disableDefaultUI: true
 			};
@@ -39,11 +35,9 @@
 
 		map = new google.maps.Map(document.getElementById("map_<?= $this->id; ?>"), myOptions);
 
-
-
 		var bounds = new google.maps.LatLngBounds();
 		
-
+		
  		<?php if ($this->Map['autozoom'] == false || count($this->Points) == 0): ?>
  			map.setCenter(new google.maps.LatLng(parseFloat(<?=$this->Map['latitude'] ?>),parseFloat(<?=$this->Map['longitude'] ?>)));
 			map.setZoom(<?=$this->Map['zoom'] ?>);
@@ -61,7 +55,7 @@
 		$(points).each(function(){
 			if(this["latitude"] && this["longitude"]){
 				var po = new google.maps.LatLng(parseFloat(this["latitude"]),parseFloat(this["longitude"]));
-				var marker = createMarker( po,this["image"] ,this["title"], this["info"], this["description"]);
+				createMarker( po , this["image"] ,this["title"], this["info"], this["description"], this["zoom"]);
 
 				<?php if ($this->Map['autozoom'] == true && count($this->Points) > 0): ?>
 					bounds.extend(po);
@@ -80,7 +74,7 @@
 
 	var infowindow = new google.maps.InfoWindow();
 
-	function createMarker(latlng, img ,title, info , description) {
+	function createMarker(latlng, img ,title, info , description,zoom) {
 		var marker = new google.maps.Marker({position: latlng, map: map, icon: img,title :title});
 			
 		google.maps.event.addListener(marker, "click", function() {
@@ -89,7 +83,7 @@
 				infowindow.open(map,marker);
 			}
 			map.setCenter(latlng);
-			map.setZoom(maxzoom);
+			map.setZoom(parseInt(zoom));
 		});
 
 		return marker;

@@ -80,73 +80,13 @@ class MapViewer extends ContentElement
 				image => \FilesModel::findByPk($value->image)->path,
 				latitude  => $position[0],
 				longitude  => $position[1],
+				zoom  => $position[2],
 				description =>  $value->description,
 				info => boolval($value->info)
 			);
 		}
 		
-
-
-
-
-
-
-
-//		//get Recipes data
-//		if (count($filterRecipes) > 0){
-//			foreach ($filterRecipes as $key => $value) {
-//
-//				//main Image
-//				
-//				
-//				//additional sorted Images
-//				$RecipeImages = array();
-//				$RecipeUnsortedImages = \FilesModel::findMultipleByUuids(StringUtil::deserialize($value->images));
-//				$RecipeImagesSort = StringUtil::deserialize($value->imagessort);
-//
-//		 		if ($RecipeImagesSort){
-//		 			foreach ($RecipeImagesSort as $sortkey => $uuid) {
-//						if ($RecipeUnsortedImages){
-//							foreach ($RecipeUnsortedImages as $Image) {
-//								if ($Image->uuid == $uuid) {
-//									array_push($RecipeImages, array
-//										(
-//											meta => $this->getMetaData($Image->meta, $objPage->language),
-//											path => $Image->path,
-//											name => $Image->name,
-//											extension => $Image->extension
-//										)
-//									);
-//								}
-//							}
-//						}
-//		 			}
-//				}
-//
-//				// generate Data_array
-//				$Recipes[$key] = array(
-//					id => $value->id,
-//					title => $value->title,
-//					description => $value->description,
-//					ingredients => $value->ingredients,
-//					preparation => $value->preparation,
-//					published => $value->published,
-//					tags => StringUtil::deserialize($value->tags),
-//					categories => StringUtil::deserialize($value->categories),
-//					image =>  array(
-//							meta => $this->getMetaData($RecipeImage->meta, $objPage->language),
-//							path => $RecipeImage->path,
-//							name => $RecipeImage->name,
-//							extension => $RecipeImage->extension
-//							),
-//					images => $RecipeImages
-//				);
-//			}
-//		}
-
-
 		$this->Template->Points = $points;
-//		$this->Template->Recipes = $Recipes;
 
 	}//end compile
 
