@@ -11,11 +11,9 @@ class PositionSelectorField extends Widget
 	public function generate()
 	{
 		
-		$GLOBALS['TL_JAVASCRIPT'][] = '//www.openlayers.org/api/OpenLayers.js';
+		$GLOBALS['TL_JAVASCRIPT'][] = '//openlayers.org/api/OpenLayers.js';
 
 		$olmapname = 'olmap'.$this->__get('currentRecord');
-
-
 
 		echo  '<div class="tl_text" id="'.$olmapname .'_canvas" style="width:auto; height:300px;"></div>
 
