@@ -87,9 +87,7 @@ $GLOBALS['TL_DCA']['tl_map'] = array
 // Palettes
 	'palettes' => array
 	(
-		'__selector__'  => array('maptype'),
-		'default'       => '{title_legend},title,api_key,height,maptype,autozoom;{description_legend},description,position;',
-		'user'          => '{title_legend},title,api_key,height,maptype,stylearray,autozoom;{description_legend},description,position;'
+		'default'       => '{title_legend},title,height,maptype,autozoom;{description_legend},description,position;'
 	),
 
 
@@ -114,13 +112,6 @@ $GLOBALS['TL_DCA']['tl_map'] = array
 			'eval'                    => array('mandatory'=>true, 'maxlength'=>128, 'tl_class'=>'w50 clr'),
 			'sql'                     => "varchar(128) NOT NULL default ''"
 		),
-		'api_key' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_map']['api_key'],
-			'inputType'               => 'text',
-			'eval'                    => array('maxlength'=>128, 'tl_class'=>'w50'),
-			'sql'                     => "varchar(128) NOT NULL default ''"
-		),
 		'description' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_map']['description'],
@@ -132,26 +123,8 @@ $GLOBALS['TL_DCA']['tl_map'] = array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_map']['height'],
 			'inputType'               => 'text',
-			'eval'                    => array('tl_class'=>'clr'),
+			'eval'                    => array('tl_class'=>'w50 clr'),
 			'sql'                     => "varchar(128)  NOT NULL default '400px'"
-		),
-		'maptype' => array
-        (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_map']['maptype'],
-            'inputType'               => 'select',
-            'sorting'                 => true,
-            'flag'                    => 1,
-            'options'                 => array('user','roadmap','satellite','hybrid','terrain'),
-            'reference'               => &$GLOBALS['TL_LANG']['tl_map'],
-            'eval'                    => array('includeBlankOption' => false,'submitOnChange' => true,'tl_class'=> 'w50'),                
-            'sql'                     => "varchar(128) NOT NULL default 'roadmap'"
-        ),
-		'stylearray' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_map']['stylearray'],
-			'inputType'               => 'textarea',
-			'eval'                    => array('allowHtml'=>true, 'class'=>'monospace', 'rte'=>'ace|html', 'tl_class'=>'clr'),
-			'sql'                     => "text NULL"
 		),
 		'position' => array
 		(

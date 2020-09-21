@@ -10,158 +10,100 @@ class PositionSelectorField extends Widget
 
 	public function generate()
 	{
-	
-		$GLOBALS['TL_JAVASCRIPT'][] = '//maps.google.com/maps/api/js?sensor=false&amp;language=de';
 		
+		$GLOBALS['TL_JAVASCRIPT'][] = '//www.openlayers.org/api/OpenLayers.js';
 
-		$mapname = 'map'.$this->__get('currentRecord');
-	
-	
-		$map .= '<script type="text/javascript">
-						 
+		$olmapname = 'olmap'.$this->__get('currentRecord');
 
-						window.addEvent("domready", function() {
-								'.$mapname.'initialize();
+
+
+		echo  '<div class="tl_text" id="'.$olmapname .'_canvas" style="width:auto; height:300px;"></div>
+
+				<script type="text/javascript">
+					
+					var '.$olmapname.';
+    				var '.$olmapname.'markers;
+					var '.$olmapname.'marker;
+					var '.$olmapname.'markerpos;
+					var '.$olmapname.'markerzoom = '.(isset($this->varValue[2]) ? $this->varValue[2] : 5).';
+
+    				function getLATLON(lat,lon){
+    					return new OpenLayers.LonLat(lon, lat).transform('.$olmapname.'.getProjectionObject() , new OpenLayers.Projection("EPSG:4326"))
+    				}
+
+    				function toLATLON(lat,lon){
+    					return new OpenLayers.LonLat( lon,lat).transform(new OpenLayers.Projection("EPSG:4326"),'.$olmapname.'.getProjectionObject())
+    				}
+
+
+	     			OpenLayers.Control.Click = OpenLayers.Class(OpenLayers.Control, {                
+	                	defaultHandlerOptions: {
+	                	    "single": true,
+	                	    "double": false,
+	                	    "pixelTolerance": 0,
+	                	    "stopSingle": false,
+	                	    "stopDouble": false
+	                	},
+		
+	                	initialize: function(options) {
+	                	    this.handlerOptions = OpenLayers.Util.extend(
+	                	        {}, this.defaultHandlerOptions
+	                	    );
+	                	    OpenLayers.Control.prototype.initialize.apply(
+	                	        this, arguments
+	                	    ); 
+	                	    this.handler = new OpenLayers.Handler.Click(
+	                	        this, {
+	                	            "click": this.trigger
+	                	        }, this.handlerOptions
+	                	    );
+	                	}, 
+		
+	                	trigger: function(e) {
+	                	    '.$olmapname.'markerpos = '.$olmapname.'.getLonLatFromPixel(e.xy);
+							'.$olmapname.'marker.moveTo('.$olmapname.'.getPixelFromLonLat('.$olmapname.'markerpos));
+							'.$olmapname.'.setCenter('.$olmapname.'markerpos, '.$olmapname.'markerzoom);
+
+							var pos = getLATLON('.$olmapname.'markerpos.lat,'.$olmapname.'markerpos.lon)
+							document.getElementById("ctrl_'.$this->strId.'_0").set("value",pos.lat);
+							document.getElementById("ctrl_'.$this->strId.'_1").set("value",pos.lon);
+							document.getElementById("ctrl_'.$this->strId.'_2").set("value",'.$olmapname.'markerzoom);
+	                	}
+
+	            	});
+
+
+					window.addEvent("domready", function() {
+						'.$olmapname.'initialize();
+					});
+
+					function '.$olmapname.'initialize() {
+						'.$olmapname.' = new OpenLayers.Map("'.$olmapname.'_canvas");
+					    '.$olmapname.'.addLayer(new OpenLayers.Layer.OSM());
+
+						'.$olmapname.'markers = new OpenLayers.Layer.Markers("Markers");
+					    '.$olmapname.'.addLayer('.$olmapname.'markers);
+
+					    '.$olmapname.'.setCenter(toLATLON( '.(isset($this->varValue[0]) ? $this->varValue[0] : 0).' ,'.(isset($this->varValue[1]) ? $this->varValue[1] : 0).'), '.(isset($this->varValue[2]) ? $this->varValue[2] : 3).');
+
+					    var click = new OpenLayers.Control.Click();
+              			'.$olmapname.'.addControl(click);
+              			click.activate();
+
+              			'.$olmapname.'marker = new OpenLayers.Marker(toLATLON( '.(isset($this->varValue[0]) ? $this->varValue[0] : 0).' ,'.(isset($this->varValue[1]) ? $this->varValue[1] : 0).'));
+ 						'.$olmapname.'markers.addMarker('.$olmapname.'marker);
+
+						'.$olmapname.'.events.register("zoomend", '.$olmapname.', function() {
+						    '.$olmapname.'markerzoom = '.$olmapname.'.zoom;
+						    document.getElementById("ctrl_'.$this->strId.'_2").set("value",'.$olmapname.'markerzoom);
 						});
-								
-						var '.$mapname.';		
-						var '.$mapname.'geocoder;
-						var '.$mapname.'markers = [];
-						var '.$mapname.'_lat;
-						var '.$mapname.'_lng;
-						var '.$mapname.'_zoom;
-					
-						var '.$mapname.'_search;
-						var '.$mapname.'_searchaction;
 
-
-						function '.$mapname.'codeAddress() {
-							var address = '.$mapname.'_search.value;
-							
-							if ('.$mapname.'geocoder) {
-								
-								'.$mapname.'geocoder.geocode( { "address": address}, function(results, status) {
-
-									if (status == google.maps.GeocoderStatus.OK) {
-										
-									'.$mapname.'.setCenter(results[0].geometry.location);
-									
-									for (var i = 0; i < '.$mapname.'markers.length; i++) {
-										'.$mapname.'markers[i].setMap(null);
-						   			}
-
-									var marker = new google.maps.Marker({
-										position: results[0].geometry.location,
-										map: '.$mapname.'
-									});
-									'.$mapname.'markers.push(marker);
-
-									'.$mapname.'_lat.value = results[0].geometry.location.lat();
-									'.$mapname.'_lng.value = results[0].geometry.location.lng();
-
-									} else {
-										alert("Geocode was not successful for the following reason: " + status);
-									}
-
-								});
-							}
-							
-						};
-
-						function '.$mapname .'initialize() {
-	
-							var myOptions = {
-								zoom: 2,
-								center: new google.maps.LatLng(30, 0),
-								mapTypeId: google.maps.MapTypeId.TERRAIN,
-								disableDefaultUI: true
-							}
-							
-							'.$mapname.'geocoder = new google.maps.Geocoder();
-							'.$mapname.' = new google.maps.Map(document.getElementById("'.$mapname .'_canvas"), myOptions);
-							'.$mapname.'_lat = document.getElementById("ctrl_'.$this->strId.'_0");
-							'.$mapname.'_lng = document.getElementById("ctrl_'.$this->strId.'_1");
-							'.$mapname.'_zoom = document.getElementById("ctrl_'.$this->strId.'_2");
-							
-							'.$mapname.'_search = document.getElementById("'.$mapname .'_search");
-							'.$mapname.'_searchaction = document.getElementById("'.$mapname .'_searchaction");
-
-							google.maps.event.addListener('.$mapname.', "click", '.$mapname .'addMarker);
-
-							google.maps.event.addListener('.$mapname.', "zoom_changed", function() {
-								'.$mapname.'_zoom.set("value",'.$mapname.'.getZoom());
-							});
-
-							google.maps.event.addListener('.$mapname.', "center_changed", function() {
-								'.$mapname.'_zoom.set("value",'.$mapname.'.getZoom());
-							});
-
-							'.$mapname.'_searchaction.addEventListener("click", function() {
-							    '.$mapname.'codeAddress();
-							}, false);
-
-						';
-
-						if (is_array($this->varValue)){
-						
-							if (is_numeric($this->varValue[0]) && is_numeric($this->varValue[1])){
-									
-								$map .='var lat = '.$this->varValue[0].';
-										var lng = '.$this->varValue[1].';
-										
-										if (lat && lng  ){
-											var marker = new google.maps.Marker({
-												position: new google.maps.LatLng(lat,lng),
-												map: '.$mapname.'
-											}
-										);
-										'.$mapname.'markers.push(marker);
-										'.$mapname.'.center = new google.maps.LatLng(lat,lng);
-									}';
-							}		
-					
-					if (is_numeric($this->varValue[2])){
-						$map .= '
-							'.$mapname.'.setZoom('.$this->varValue[2].');
-						';
 					}
 
-			}
-			
-							
-			$map .=	'
 
-					    }
+			</script>';
 
-						function '.$mapname .'addMarker(event) {
-						
-							for (var i = 0; i < '.$mapname.'markers.length; i++) {
-								'.$mapname.'markers[i].setMap(null);
-						    }
-						
-							var marker = new google.maps.Marker({
-								position: event.latLng,
-								map: '.$mapname.'
-							});
-							'.$mapname.'markers.push(marker);
-						
-							'.$mapname.'_lat.set("value", event.latLng.lat());
-							'.$mapname.'_lng.set("value", event.latLng.lng());
-							'.$mapname.'_zoom.set("value",'.$mapname.'.getZoom());
-						
-							'.$mapname.'.setCenter(event.latLng);
-						};	
 
-					</script>';
- 	
-		$map .= '<input type="text" class="tl_text" id="'.$mapname .'_search" > <input type="button" class="tl_submit" value="Suche" id="'.$mapname .'_searchaction"><br><br>
-				<div class="tl_text" id="'.$mapname .'_canvas" style="width:auto; height:300px;"></div><br>';
-
-		echo $map;
-		
-		
-		
-		
 		if (!is_array($this->varValue))
 		{
 			$this->varValue = array($this->varValue);
@@ -179,18 +121,12 @@ class PositionSelectorField extends Widget
 									$this->getAttributes());
 		}
 
-		//array_push($arrFields, '<button name="code" id="xyz" class="tl_text_3" onclick="doCommand('bold');">Geocode</button>');
-	
 
 		return sprintf('<div id="ctrl_%s"%s>%s</div>%s',
 						$this->strId,
 						(($this->strClass != '') ? ' class="' . $this->strClass . '"' : ''),
 						implode(' ', $arrFields),
 						$this->wizard);
-
-
-		
-		
 
 	}
 }

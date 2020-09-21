@@ -5,92 +5,96 @@
 
 <?= $this->Map['description']; ?>
 
+<style type="text/css">
+  img[id *= "_innerImage"]:hover { cursor:pointer; } 
+</style>
 
 <div id="map_<?= $this->id; ?>" style="width:100%;height: <?= $this->Map['height'] ?>"></div>
 
 <script type="text/javascript">
 
-	var map;
+	
 
 	var points = <?= json_encode($this->Points) ?>;
+    var popup;
+    var map;
+    var markers;
 
-	$(function(){
+    function PopupHide(){
+        popup.hide();
 
-		//Options
-		<?php if ($this->Map['maptype'] == 'user'): ?>
-			var myOptions = {
-				zoom: 3,
-				mapTypeControlOptions: {
-					mapTypeIds: [google.maps.MapTypeId.ROADMAP, "map_style"]
-				},
-				disableDefaultUI: true
-			};
-		<?php else: ?>
-			var myOptions = {
-				  zoom: 3,
-				  mapTypeId: '<?=$this->Map['maptype'] ?>',
-				  disableDefaultUI: true
-			};
-		<?php endif; ?>
+<?php if ($this->Map["autozoom"] == true): ?>
+		map.zoomToExtent(markers.getDataExtent());
+<?php else: ?>
+		map.setCenter(new OpenLayers.LonLat( <?= $this->Map['longitude'] ?> ,<?= $this->Map['latitude'] ?> ).transform(new OpenLayers.Projection("EPSG:4326"),map.getProjectionObject()), <?= $this->Map['zoom'] ?>)
+<?php endif;?>
 
-		map = new google.maps.Map(document.getElementById("map_<?= $this->id; ?>"), myOptions);
+	};
 
-		var bounds = new google.maps.LatLngBounds();
-		
-		
- 		<?php if ($this->Map['autozoom'] == false || count($this->Points) == 0): ?>
- 			map.setCenter(new google.maps.LatLng(parseFloat(<?=$this->Map['latitude'] ?>),parseFloat(<?=$this->Map['longitude'] ?>)));
-			map.setZoom(<?=$this->Map['zoom'] ?>);
- 		<?php endif; ?>
-
-
-		//set the style array		
-		<?php if ($this->Map['maptype'] == 'user'): ?>
-			var styledMap = new google.maps.StyledMapType(<?=$this->Map['stylearray'] ?>,{name: "Styled Map"});
-			map.mapTypes.set("map_style", styledMap);
-			map.setMapTypeId("map_style");
-		<?php endif; ?>
+    function createMarker( latlng, img ,title, info , description,zoom){
+        var marker = new OpenLayers.Marker(latlng,new OpenLayers.Icon(img, new OpenLayers.Size(35,35), 0));
+        
+        var markerClick = function (evt) { 
+            popup.setContentHTML(description);
+            popup.lonlat = latlng;
+            map.setCenter(latlng, zoom);
+            popup.show();
+        };
+        if (info == true){
+       		marker.events.register("mousedown", marker, markerClick);
+		}
+        markers.addMarker(marker);
+    }
 
 
-		$(points).each(function(){
-			if(this["latitude"] && this["longitude"]){
-				var po = new google.maps.LatLng(parseFloat(this["latitude"]),parseFloat(this["longitude"]));
-				createMarker( po , this["image"] ,this["title"], this["info"], this["description"], this["zoom"]);
+   	$(function(){
 
-				<?php if ($this->Map['autozoom'] == true && count($this->Points) > 0): ?>
-					bounds.extend(po);
-				<?php endif; ?>
-		
-			}
-		});
+    	map = new OpenLayers.Map("map_<?= $this->id; ?>");
+    	map.addLayer(new OpenLayers.Layer.OSM());
 
-		<?php if ($this->Map['autozoom'] == true && count($this->Points) > 0): ?>
-			map.fitBounds(bounds);
-		<?php endif; ?>
-		
+    	var lonLat = new OpenLayers.LonLat(  <?= $this->Map['longitude'] ?> ,<?= $this->Map['latitude'] ?> )
+    	      .transform(
+    	        new OpenLayers.Projection("EPSG:4326"), 
+    	        map.getProjectionObject() 
+    	      );
+    	
+    	markers = new OpenLayers.Layer.Markers("Markers");
+    	map.addLayer(markers);
+
+
+    	$(points).each(function(){
+
+    	  if(this["latitude"] && this["longitude"]){
+
+    	    var po = new OpenLayers.LonLat( this["longitude"] ,this["latitude"] )
+    	      .transform(
+    	        new OpenLayers.Projection("EPSG:4326"), 
+    	        map.getProjectionObject() 
+    	      );
+
+    	    createMarker( po , this["image"] ,this["title"], this["info"], this["description"], this["zoom"]);
+
+    	  }
+
+    	});
+
+		map.setCenter(new OpenLayers.LonLat( <?= $this->Map['longitude'] ?> ,<?= $this->Map['latitude'] ?> ).transform(new OpenLayers.Projection("EPSG:4326"),map.getProjectionObject()), <?= $this->Map['zoom'] ?>)
+
+		popup = new OpenLayers.Popup.FramedCloud("Popup", lonLat, null, ' ',null, true , PopupHide);
+		popup.hide();
+		map.addPopup(popup);
+
+<?php if ($this->Map["autozoom"] == true): ?>
+		map.zoomToExtent(markers.getDataExtent());
+<?php else: ?>
+		map.setCenter(new OpenLayers.LonLat( <?= $this->Map['longitude'] ?> ,<?= $this->Map['latitude'] ?> ).transform(new OpenLayers.Projection("EPSG:4326"),map.getProjectionObject()), <?= $this->Map['zoom'] ?>)
+<?php endif;?>
 
 	});
 
 
-	var infowindow = new google.maps.InfoWindow();
-
-	function createMarker(latlng, img ,title, info , description,zoom) {
-		var marker = new google.maps.Marker({position: latlng, map: map, icon: img,title :title});
-			
-		google.maps.event.addListener(marker, "click", function() {
-			if(info == true){
-				infowindow.setContent(description);
-				infowindow.open(map,marker);
-			}
-			map.setCenter(latlng);
-			map.setZoom(parseInt(zoom));
-		});
-
-		return marker;
-	}
-
 </script>
 
 <?php 
-	//$this->showTemplateVars();
+//$this->showTemplateVars();
 ?>

@@ -27,11 +27,7 @@ class MapViewer extends ContentElement
 		//gets the categorie
 		$objMap = \MapModel::findByPK($this->map);
 
-		if(isset($objMap->api_key)){
-			$GLOBALS['TL_JAVASCRIPT'][] = '//maps.google.com/maps/api/js?key='.$objMap->api_key.'&amp;sensor=false&amp;language='.$objPage->language;
-		}else{
-			$GLOBALS['TL_JAVASCRIPT'][] = '//maps.google.com/maps/api/js?sensor=false&amp;language='.$objPage->language;
-		}
+		$GLOBALS['TL_JAVASCRIPT'][] = '//www.openlayers.org/api/OpenLayers.js';
 
 		try
 		{
@@ -46,14 +42,11 @@ class MapViewer extends ContentElement
 			id => $objMap->id,
 			title => $objMap->title,
 			description => $objMap->description,
-			api_key => $objMap->api_key,
 			height => $objMap->height,
-			maptype => $objMap->maptype,
-			stylearray => $objMap->stylearray,
 			latitude  => $mapposition[0],
 			longitude  => $mapposition[1],
 			zoom  => $mapposition[2],
-			autozoom => $objMap->autozoom
+			autozoom => boolval($objMap->autozoom)
 		);
 
 		$this->Template->Map = $Map;
