@@ -11,7 +11,7 @@
 
 <div id="map_<?= $this->id; ?>" style="width:100%;height: <?= $this->Map['height'] ?>"></div>
 
-<script src="https://www.openlayers.org/api/OpenLayers.js"></script>
+<script src="//openlayers.org/api/OpenLayers.js"></script>
 
 <script type="text/javascript">
 
