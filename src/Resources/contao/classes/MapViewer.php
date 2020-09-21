@@ -27,8 +27,6 @@ class MapViewer extends ContentElement
 		//gets the categorie
 		$objMap = \MapModel::findByPK($this->map);
 
-		$GLOBALS['TL_JAVASCRIPT'][] = '//www.openlayers.org/api/OpenLayers.js';
-
 		try
 		{
 			$mapposition = unserialize($objMap->position);
