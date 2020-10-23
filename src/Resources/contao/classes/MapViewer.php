@@ -20,6 +20,9 @@ class MapViewer extends ContentElement
 	protected function compile()
 	{
 
+		$GLOBALS['TL_JAVASCRIPT'][] = 'bundles/jonnyspmap/leaflet.js';
+		$GLOBALS['TL_CSS'][] = 		  'bundles/jonnyspmap/leaflet.css';
+
 		global $objPage;
 		$this->loadLanguageFile('tl_map');
 		$this->loadLanguageFile('tl_map_points');
@@ -36,15 +39,18 @@ class MapViewer extends ContentElement
 			$mapposition = array();
 		}
 
-		$Map= array(
+		$Map = array(
 			id => $objMap->id,
+			titleURL => $objMap->titleURL,
 			title => $objMap->title,
 			description => $objMap->description,
 			height => $objMap->height,
 			latitude  => $mapposition[0],
 			longitude  => $mapposition[1],
 			zoom  => $mapposition[2],
-			autozoom => boolval($objMap->autozoom)
+			autozoom => boolval($objMap->autozoom),
+			minzoom => $objMap->minzoom,
+			maxzoom => $objMap->maxzoom
 		);
 
 		$this->Template->Map = $Map;
@@ -66,9 +72,12 @@ class MapViewer extends ContentElement
 				$position = array();
 			}
 
+
+			$imagefile = \FilesModel::findByPk($value->image);
+
 			$points[$key] = array(
 				title => $value->title,
-				image => \FilesModel::findByPk($value->image)->path,
+				image => $imagefile->path,
 				latitude  => $position[0],
 				longitude  => $position[1],
 				zoom  => $position[2],

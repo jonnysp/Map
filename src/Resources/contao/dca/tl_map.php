@@ -87,7 +87,7 @@ $GLOBALS['TL_DCA']['tl_map'] = array
 // Palettes
 	'palettes' => array
 	(
-		'default'       => '{title_legend},title,height,maptype,autozoom;{description_legend},description,position;'
+		'default'       => '{title_legend},title,height,titleURL;{zoom_legend},autozoom,minzoom,maxzoom,;{description_legend},description,position;'
 	),
 
 
@@ -111,6 +111,14 @@ $GLOBALS['TL_DCA']['tl_map'] = array
 			'inputType'               => 'text',
 			'eval'                    => array('mandatory'=>true, 'maxlength'=>128, 'tl_class'=>'w50 clr'),
 			'sql'                     => "varchar(128) NOT NULL default ''"
+		),
+		'titleURL' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_map']['titleURL'],
+			'default'				  => 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+			'inputType'               => 'text',
+			'eval'                    => array('mandatory'=>true, 'maxlength'=>128, 'tl_class'=>'w50 clr'),
+			'sql'                     => "varchar(128) NOT NULL default 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'"
 		),
 		'description' => array
 		(
@@ -138,8 +146,24 @@ $GLOBALS['TL_DCA']['tl_map'] = array
 			'label'                   => &$GLOBALS['TL_LANG']['tl_map']['autozoom'],
 			'inputType'               => 'checkbox',
 			'isBoolean'				  => true,
-			'eval'                    => array( 'tl_class'=>'w50'),
+			'eval'                    => array( 'tl_class'=>'w100 clr'),
 			'sql'                     => "char(1) NOT NULL default ''"
+		),
+		'minzoom' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_map']['minzoom'],
+			'default'				  => 1,
+			'inputType'               => 'text',
+			'eval'                    => array( 'tl_class'=>'w50','rgxp'=>'natural'),
+			'sql'                     => "int(10) NOT NULL default '1'"
+		),
+		'maxzoom' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_map']['maxzoom'],
+			'default'				  => 19,
+			'inputType'               => 'text',
+			'eval'                    => array( 'tl_class'=>'w50','rgxp'=>'natural'),
+			'sql'                     => "int(10) NOT NULL default '19'"
 		)
 
 	)

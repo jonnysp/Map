@@ -3,15 +3,14 @@
 class PositionSelectorField extends Widget
 {
 
-
 	protected $strTemplate = 'be_widget';
 	protected $blnSubmitInput = true;	
- 
 
 	public function generate()
 	{
 		
-		$GLOBALS['TL_JAVASCRIPT'][] = '//openlayers.org/api/OpenLayers.js';
+		$GLOBALS['TL_JAVASCRIPT'][] = 'bundles/jonnyspmap/leaflet.js';
+		$GLOBALS['TL_CSS'][] = 		  'bundles/jonnyspmap/leaflet.css';
 
 		$olmapname = 'olmap'.$this->__get('currentRecord');
 
@@ -19,85 +18,62 @@ class PositionSelectorField extends Widget
 
 				<script type="text/javascript">
 					
-					var '.$olmapname.';
-    				var '.$olmapname.'markers;
-					var '.$olmapname.'marker;
-					var '.$olmapname.'markerpos;
+					var '.$olmapname.'default_zoom = 3;
+					var '.$olmapname.'min_zoom = 1;
+					var '.$olmapname.'max_zoom = 19;
+					var '.$olmapname.'marker = {};
+					var '.$olmapname.'markerpos = ['.(isset($this->varValue[0]) ? $this->varValue[0] : 0).' ,'.(isset($this->varValue[1]) ? $this->varValue[1] : 0).'];
 					var '.$olmapname.'markerzoom = '.(isset($this->varValue[2]) ? $this->varValue[2] : 5).';
 
-    				function getLATLON(lat,lon){
-    					return new OpenLayers.LonLat(lon, lat).transform('.$olmapname.'.getProjectionObject() , new OpenLayers.Projection("EPSG:4326"))
-    				}
-
-    				function toLATLON(lat,lon){
-    					return new OpenLayers.LonLat( lon,lat).transform(new OpenLayers.Projection("EPSG:4326"),'.$olmapname.'.getProjectionObject())
-    				}
-
-
-	     			OpenLayers.Control.Click = OpenLayers.Class(OpenLayers.Control, {                
-	                	defaultHandlerOptions: {
-	                	    "single": true,
-	                	    "double": false,
-	                	    "pixelTolerance": 0,
-	                	    "stopSingle": false,
-	                	    "stopDouble": false
-	                	},
-		
-	                	initialize: function(options) {
-	                	    this.handlerOptions = OpenLayers.Util.extend(
-	                	        {}, this.defaultHandlerOptions
-	                	    );
-	                	    OpenLayers.Control.prototype.initialize.apply(
-	                	        this, arguments
-	                	    ); 
-	                	    this.handler = new OpenLayers.Handler.Click(
-	                	        this, {
-	                	            "click": this.trigger
-	                	        }, this.handlerOptions
-	                	    );
-	                	}, 
-		
-	                	trigger: function(e) {
-	                	    '.$olmapname.'markerpos = '.$olmapname.'.getLonLatFromPixel(e.xy);
-							'.$olmapname.'marker.moveTo('.$olmapname.'.getPixelFromLonLat('.$olmapname.'markerpos));
-							'.$olmapname.'.setCenter('.$olmapname.'markerpos, '.$olmapname.'markerzoom);
-
-							var pos = getLATLON('.$olmapname.'markerpos.lat,'.$olmapname.'markerpos.lon)
-							document.getElementById("ctrl_'.$this->strId.'_0").set("value",pos.lat);
-							document.getElementById("ctrl_'.$this->strId.'_1").set("value",pos.lon);
-							document.getElementById("ctrl_'.$this->strId.'_2").set("value",'.$olmapname.'markerzoom);
-	                	}
-
-	            	});
-
-
-					window.addEvent("domready", function() {
-						'.$olmapname.'initialize();
+					var markerIcon = L.icon({
+					    iconUrl: "bundles/jonnyspmap/images/marker-icon.png",
+					    iconSize:     [25,41], 
+					    iconAnchor:   [12, 41], 
+					    popupAnchor:  [1, -30] 
 					});
 
+					function onZoomed(e){
+						'.$olmapname.'markerzoom = '.$olmapname.'.getZoom();
+					//	'.$olmapname.'.flyTo('.$olmapname.'markerpos,'.$olmapname.'markerzoom);
+						document.getElementById("ctrl_'.$this->strId.'_2").set("value",'.$olmapname.'markerzoom);
+					}
+
+					function onMapClick(e) {
+
+						'.$olmapname.'markerpos  = e.latlng;
+						'.$olmapname.'markerzoom = '.$olmapname.'.getZoom();
+
+						document.getElementById("ctrl_'.$this->strId.'_0").set("value",e.latlng.lat);
+						document.getElementById("ctrl_'.$this->strId.'_1").set("value",e.latlng.lng);
+
+							if ('.$olmapname.'marker  != undefined) {
+								'.$olmapname.'.removeLayer('.$olmapname.'marker);
+							};
+
+						'.$olmapname.'marker = L.marker(e.latlng, {icon: markerIcon }).addTo('.$olmapname.');
+						'.$olmapname.'.flyTo('.$olmapname.'markerpos,'.$olmapname.'markerzoom);
+					}
+
 					function '.$olmapname.'initialize() {
-						'.$olmapname.' = new OpenLayers.Map("'.$olmapname.'_canvas");
-					    '.$olmapname.'.addLayer(new OpenLayers.Layer.OSM());
 
-						'.$olmapname.'markers = new OpenLayers.Layer.Markers("Markers");
-					    '.$olmapname.'.addLayer('.$olmapname.'markers);
+						'.$olmapname.' = L.map('.$olmapname .'_canvas).setView([0, 0], '.$olmapname.'default_zoom);
 
-					    '.$olmapname.'.setCenter(toLATLON( '.(isset($this->varValue[0]) ? $this->varValue[0] : 0).' ,'.(isset($this->varValue[1]) ? $this->varValue[1] : 0).'), '.(isset($this->varValue[2]) ? $this->varValue[2] : 3).');
+						L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+							maxZoom: '.$olmapname.'max_zoom,
+							minZoom: '.$olmapname.'min_zoom,
+						}).addTo('.$olmapname.');
 
-					    var click = new OpenLayers.Control.Click();
-              			'.$olmapname.'.addControl(click);
-              			click.activate();
+						'.$olmapname.'marker = L.marker('.$olmapname.'markerpos, {icon: markerIcon }).addTo('.$olmapname.');
+						'.$olmapname.'.flyTo('.$olmapname.'markerpos,'.$olmapname.'markerzoom)
 
-              			'.$olmapname.'marker = new OpenLayers.Marker(toLATLON( '.(isset($this->varValue[0]) ? $this->varValue[0] : 0).' ,'.(isset($this->varValue[1]) ? $this->varValue[1] : 0).'));
- 						'.$olmapname.'markers.addMarker('.$olmapname.'marker);
-
-						'.$olmapname.'.events.register("zoomend", '.$olmapname.', function() {
-						    '.$olmapname.'markerzoom = '.$olmapname.'.zoom;
-						    document.getElementById("ctrl_'.$this->strId.'_2").set("value",'.$olmapname.'markerzoom);
-						});
+						'.$olmapname.'.on("zoomend", onZoomed );
+						'.$olmapname.'.on("click", onMapClick);
 
 					}
 
+					window.addEvent("domready", function() {
+						'.$olmapname.'initialize();
+					});					
 
 			</script>';
 
