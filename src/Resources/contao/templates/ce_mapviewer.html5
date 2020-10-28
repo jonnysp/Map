@@ -43,10 +43,12 @@
 
     	map = L.map('map_<?= $this->id; ?>').setView(default_pos, default_zoom);
 
-        L.tileLayer("<?= $this->Map['titleURL'] ?>", {
+        L.tileLayer('<?= $this->Map['titleURL'] ?>', {
             maxZoom: max_zoom,
             minZoom: min_zoom,
         }).addTo(map);
+
+        map.attributionControl.setPrefix('<?= $this->Map['copyright'] ?>');
 
         $(points).each(function(index, value) {
 

@@ -87,11 +87,8 @@ $GLOBALS['TL_DCA']['tl_map'] = array
 // Palettes
 	'palettes' => array
 	(
-		'default'       => '{title_legend},title,height,titleURL;{zoom_legend},autozoom,minzoom,maxzoom,;{description_legend},description,position;'
+		'default'       => '{title_legend},title,height,titleURL,copyright;{zoom_legend},autozoom,minzoom,maxzoom;{description_legend},description;{position_legend},position;'
 	),
-
-
-
 
 	// Fields
 	'fields' => array
@@ -117,8 +114,16 @@ $GLOBALS['TL_DCA']['tl_map'] = array
 			'label'                   => &$GLOBALS['TL_LANG']['tl_map']['titleURL'],
 			'default'				  => 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
 			'inputType'               => 'text',
-			'eval'                    => array('mandatory'=>true, 'maxlength'=>128, 'tl_class'=>'w50 clr'),
+			'eval'                    => array('mandatory'=>true, 'maxlength'=>128, 'tl_class'=>'w100 clr'),
 			'sql'                     => "varchar(128) NOT NULL default 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'"
+		),
+		'copyright' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_map']['copyright'],
+			'default'				  => '',
+			'inputType'               => 'text',
+			'eval'                    => array('mandatory'=>false, 'allowHtml'=>true,'preserveTags'=>true,'maxlength'=>128, 'tl_class'=>'w100 clr'),
+			'sql'                     => "text NOT NULL default ''"
 		),
 		'description' => array
 		(

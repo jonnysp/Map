@@ -42,6 +42,7 @@ class MapViewer extends ContentElement
 		$Map = array(
 			id => $objMap->id,
 			titleURL => $objMap->titleURL,
+			copyright => $objMap->copyright,
 			title => $objMap->title,
 			description => $objMap->description,
 			height => $objMap->height,
@@ -73,11 +74,11 @@ class MapViewer extends ContentElement
 			}
 
 
-			$imagefile = \FilesModel::findByPk($value->image);
+			$imagemodel = \FilesModel::findByPk($value->image);
 
 			$points[$key] = array(
 				title => $value->title,
-				image => $imagefile->path,
+				image => $imagemodel->path,
 				latitude  => $position[0],
 				longitude  => $position[1],
 				zoom  => $position[2],

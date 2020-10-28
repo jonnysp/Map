@@ -4,6 +4,7 @@
  * Fields
  */
 $GLOBALS['TL_LANG']['tl_map']['titleURL'] = array('Title URL', 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+$GLOBALS['TL_LANG']['tl_map']['copyright'] = array('Copyright', 'Copyright Information.');
 $GLOBALS['TL_LANG']['tl_map']['title']       = array('Map Name', 'Geben Sie hier den Mapnamen ein.');
 $GLOBALS['TL_LANG']['tl_map']['description'] = array('Map Beschreibung', 'Mapbeschreibung.');
 $GLOBALS['TL_LANG']['tl_map']['height'] =  array('Map Höhe', 'Höhe');
@@ -19,6 +20,8 @@ $GLOBALS['TL_LANG']['tl_map']['maxzoom'] = array('Maxzoom', 'maximale Zoomstufe.
 $GLOBALS['TL_LANG']['tl_map']['title_legend'] = 'Map Grundeinstellungen';
 $GLOBALS['TL_LANG']['tl_map']['description_legend'] = 'Map Beschreibung';
 $GLOBALS['TL_LANG']['tl_map']['zoom_legend'] = 'Zoom Settings';
+$GLOBALS['TL_LANG']['tl_map']['position_legend'] = 'Position';
+
 
 /**
  * Buttons
