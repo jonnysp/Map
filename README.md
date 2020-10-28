@@ -1,2 +1,2 @@
 # Map
-Adds a Googlemap to Contao 4
+Adds a Titlemap to Contao 4
