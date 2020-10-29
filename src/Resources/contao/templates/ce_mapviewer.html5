@@ -76,5 +76,5 @@
 </script>
 
 <?php 
-$this->showTemplateVars();
+//$this->showTemplateVars();
 ?>
