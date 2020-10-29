@@ -75,10 +75,12 @@ class MapViewer extends ContentElement
 
 
 			$imagemodel = \FilesModel::findByPk($value->image);
+			$objFile = new File($imagemodel->path);
 
 			$points[$key] = array(
 				title => $value->title,
 				image => $imagemodel->path,
+				size => $objFile->imageSize,
 				latitude  => $position[0],
 				longitude  => $position[1],
 				zoom  => $position[2],
