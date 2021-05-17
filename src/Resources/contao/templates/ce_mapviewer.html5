@@ -38,6 +38,10 @@
 
     	map = L.map('map_<?= $this->id; ?>').setView(default_pos, default_zoom);
 
+		<?php if ($this->Map["mousescroll"] == false): ?>
+			map.scrollWheelZoom.disable();
+        <?php endif;?>
+
         L.tileLayer('<?= $this->Map['titleURL'] ?>', {
             maxZoom: max_zoom,
             minZoom: min_zoom,

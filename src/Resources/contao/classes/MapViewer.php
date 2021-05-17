@@ -50,6 +50,7 @@ class MapViewer extends ContentElement
 			longitude  => $mapposition[1],
 			zoom  => $mapposition[2],
 			autozoom => boolval($objMap->autozoom),
+			mousescroll => boolval($objMap->mousescroll),
 			minzoom => $objMap->minzoom,
 			maxzoom => $objMap->maxzoom
 		);

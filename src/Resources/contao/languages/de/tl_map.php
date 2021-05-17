@@ -12,7 +12,7 @@ $GLOBALS['TL_LANG']['tl_map']['position'] = array('Position', 'Map Position.');
 $GLOBALS['TL_LANG']['tl_map']['autozoom'] = array('Autozoom', 'Auf Map-Point Zoomen.');
 $GLOBALS['TL_LANG']['tl_map']['minzoom'] = array('Minzoom', 'minimale Zoomstufe.');
 $GLOBALS['TL_LANG']['tl_map']['maxzoom'] = array('Maxzoom', 'maximale Zoomstufe.');
-
+$GLOBALS['TL_LANG']['tl_map']['mousescroll'] = array('Mit Maus Zoomen', 'mit Mausrad zoomen.');
 
 /**
  * Legends

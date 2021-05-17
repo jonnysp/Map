@@ -87,7 +87,7 @@ $GLOBALS['TL_DCA']['tl_map'] = array
 // Palettes
 	'palettes' => array
 	(
-		'default'       => '{title_legend},title,height,titleURL,copyright;{zoom_legend},autozoom,minzoom,maxzoom;{description_legend},description;{position_legend},position;'
+		'default'       => '{title_legend},title,height,titleURL,copyright;{zoom_legend},autozoom,minzoom,maxzoom,mousescroll;{description_legend},description;{position_legend},position;'
 	),
 
 	// Fields
@@ -153,6 +153,14 @@ $GLOBALS['TL_DCA']['tl_map'] = array
 			'isBoolean'				  => true,
 			'eval'                    => array( 'tl_class'=>'w100 clr'),
 			'sql'                     => "char(1) NOT NULL default ''"
+		),
+		'mousescroll' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_map']['mousescroll'],
+			'inputType'               => 'checkbox',
+			'isBoolean'				  => true,
+			'eval'                    => array( 'tl_class'=>'w100 clr'),
+			'sql'                     => "char(1) NOT NULL default '1'"
 		),
 		'minzoom' => array
 		(
