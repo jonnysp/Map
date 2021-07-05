@@ -40,19 +40,19 @@ class MapViewer extends ContentElement
 		}
 
 		$Map = array(
-			id => $objMap->id,
-			titleURL => $objMap->titleURL,
-			copyright => $objMap->copyright,
-			title => $objMap->title,
-			description => $objMap->description,
-			height => $objMap->height,
-			latitude  => $mapposition[0],
-			longitude  => $mapposition[1],
-			zoom  => $mapposition[2],
-			autozoom => boolval($objMap->autozoom),
-			mousescroll => boolval($objMap->mousescroll),
-			minzoom => $objMap->minzoom,
-			maxzoom => $objMap->maxzoom
+			"id" => $objMap->id,
+			"titleURL" => $objMap->titleURL,
+			"copyright" => $objMap->copyright,
+			"title" => $objMap->title,
+			"description" => $objMap->description,
+			"height" => $objMap->height,
+			"latitude" => $mapposition[0],
+			"longitude"  => $mapposition[1],
+			"zoom"  => $mapposition[2],
+			"autozoom" => boolval($objMap->autozoom),
+			"mousescroll" => boolval($objMap->mousescroll),
+			"minzoom" => $objMap->minzoom,
+			"maxzoom" => $objMap->maxzoom
 		);
 
 		$this->Template->Map = $Map;
@@ -79,14 +79,14 @@ class MapViewer extends ContentElement
 			$objFile = new File($imagemodel->path);
 
 			$points[$key] = array(
-				title => $value->title,
-				image => $imagemodel->path,
-				size => $objFile->imageSize,
-				latitude  => $position[0],
-				longitude  => $position[1],
-				zoom  => $position[2],
-				description =>  $value->description,
-				info => boolval($value->info)
+				"title" => $value->title,
+				"image" => $imagemodel->path,
+				"size" => $objFile->imageSize,
+				"latitude"  => $position[0],
+				"longitude"  => $position[1],
+				"zoom"  => $position[2],
+				"description" =>  $value->description,
+				"info" => boolval($value->info)
 			);
 		}
 		
