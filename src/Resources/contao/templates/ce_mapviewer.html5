@@ -5,74 +5,90 @@
 
 <?= $this->Map['description']; ?>
 
-<div id="map_<?= $this->id; ?>" style="width:100%;height: <?= $this->Map['height'] ?>"></div>
+<div id="cmap_<?= $this->id; ?>" style="width:100%;height: <?= $this->Map['height'] ?>"></div>
 
 <script type="text/javascript">
 
-	var points = <?= json_encode($this->Points) ?>;
-    var map;
+	var points_<?= $this->id; ?> = <?= json_encode($this->Points) ?>;
+    var map_<?= $this->id; ?>;
 
-    var default_zoom = <?= $this->Map['zoom'] ?>;
-    var default_pos = [<?= $this->Map['latitude'] ?>, <?= $this->Map['longitude'] ?>];
-    var min_zoom = <?= $this->Map['minzoom'] ?>;
-    var max_zoom = <?= $this->Map['maxzoom'] ?>;
-    var markers = new Array();
+    var default_zoom_<?= $this->id; ?> = <?= $this->Map['zoom'] ?>;
+    var default_pos_<?= $this->id; ?> = [<?= $this->Map['latitude'] ?>, <?= $this->Map['longitude'] ?>];
+    var min_zoom_<?= $this->id; ?> = <?= $this->Map['minzoom'] ?>;
+    var max_zoom_<?= $this->id; ?> = <?= $this->Map['maxzoom'] ?>;
+    var markers_<?= $this->id; ?> = new Array();
 
     var LeafIcon = L.Icon.extend({});
 
-    function PopupHide(){
+    function PopupHide_<?= $this->id; ?>(){
         <?php if ($this->Map["autozoom"] == true): ?>
-            var group = new L.featureGroup(markers);
-            map.fitBounds(group.getBounds());
+            var group = new L.featureGroup(markers_<?= $this->id; ?>);
+            map_<?= $this->id; ?>.fitBounds(group.getBounds());
         <?php else: ?>
-            map.flyTo(default_pos,default_zoom);
+            map_<?= $this->id; ?>.flyTo(default_pos_<?= $this->id; ?>,default_zoom_<?= $this->id; ?>);
         <?php endif;?>
 	};
 
-    function MarkerClick(e)
+    function MarkerClick_<?= $this->id; ?>(e)
     {
-      map.flyTo(e.latlng,e.target.options.zoom);
+      map_<?= $this->id; ?>.flyTo(e.latlng,e.target.options.zoom);
     };
 
    	$(function(){
 
-    	map = L.map('map_<?= $this->id; ?>').setView(default_pos, default_zoom);
+    	map_<?= $this->id; ?> = L.map('cmap_<?= $this->id; ?>').setView(default_pos_<?= $this->id; ?>, default_zoom_<?= $this->id; ?>);
 
 		<?php if ($this->Map["mousescroll"] == false): ?>
-			map.scrollWheelZoom.disable();
+			map_<?= $this->id; ?>.scrollWheelZoom.disable();
         <?php endif;?>
 
         L.tileLayer('<?= $this->Map['titleURL'] ?>', {
-            maxZoom: max_zoom,
-            minZoom: min_zoom,
-        }).addTo(map);
+            maxZoom: max_zoom_<?= $this->id; ?>,
+            minZoom: min_zoom_<?= $this->id; ?>,
+        }).addTo(map_<?= $this->id; ?>);
 
-        map.attributionControl.setPrefix('<?= $this->Map['copyright'] ?>');
+        map_<?= $this->id; ?>.attributionControl.setPrefix('<?= $this->Map['copyright'] ?>');
 
-        $(points).each(function(index, value) {
+        $(points_<?= $this->id; ?>).each(function(index, value) {
 
-            var cicon = new LeafIcon({
-                            iconUrl: value.image ,
-                            iconSize: [value.size[0], value.size[1]],
-                            iconAnchor: [value.size[0]/2, value.size[1]/2],
-                            popupAnchor:  [0, value.size[1]/3 * -1 ]
-                        }); 
+            
+            if (value.image){
 
-            if( value.info == true){
-                markers.push(L.marker([value.latitude, value.longitude], {zoom: value.zoom, icon: cicon }).on('click', MarkerClick).bindPopup(value.description).addTo(map))
+                    var cicon = new LeafIcon({
+                                    iconUrl: value.image ,
+                                    iconSize: [value.size[0], value.size[1]],
+                                    iconAnchor: [value.size[0]/2, value.size[1]/2],
+                                    popupAnchor:  [0, value.size[1]/3 * -1 ]
+                                }); 
+        
+
+                    if( value.info == true){
+                        markers_<?= $this->id; ?>.push(L.marker([value.latitude, value.longitude], {zoom: value.zoom, icon: cicon }).on('click', MarkerClick_<?= $this->id; ?>).bindPopup(value.description).addTo(map_<?= $this->id; ?>))
+                    }else{
+                        markers_<?= $this->id; ?>.push(L.marker([value.latitude, value.longitude], {icon: cicon}).addTo(map_<?= $this->id; ?>))
+                    }
+
             }else{
-                markers.push(L.marker([value.latitude, value.longitude], {icon: cicon}).addTo(map))
+
+                if( value.info == true){
+                    markers_<?= $this->id; ?>.push(L.marker([value.latitude, value.longitude], {zoom: value.zoom}).on('click', MarkerClick_<?= $this->id; ?>).bindPopup(value.description).addTo(map_<?= $this->id; ?>))
+                }else{
+                    markers_<?= $this->id; ?>.push(L.marker([value.latitude, value.longitude]).addTo(map_<?= $this->id; ?>))
+                }
+
             }
+
+
         });
 
         <?php if ($this->Map["autozoom"] == true): ?>
-            var group = new L.featureGroup(markers);
-            map.fitBounds(group.getBounds());
+            var group_<?= $this->id; ?> = new L.featureGroup(markers_<?= $this->id; ?>);
+            map_<?= $this->id; ?>.fitBounds(group_<?= $this->id; ?>.getBounds());
         <?php else: ?>
-            map.flyTo(default_pos,default_zoom);
+            map_<?= $this->id; ?>.flyTo(default_pos_<?= $this->id; ?>,default_zoom_<?= $this->id; ?>);
         <?php endif;?>
 
-        map.on('popupclose',PopupHide);
+        map_<?= $this->id; ?>.on('popupclose',PopupHide_<?= $this->id; ?>);
 
 	});
 
