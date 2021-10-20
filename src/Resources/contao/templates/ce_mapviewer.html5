@@ -1,11 +1,14 @@
 
-<?php if ($this->Map['title']): ?>
-		<h1><?= $this->Map['title'] ?></h1>
-<?php endif; ?>
 
-<?= $this->Map['description']; ?>
+<div class="<?= $this->class ?>">
+    <?php if ($this->Map['title']): ?>
+    		<h1><?= $this->Map['title'] ?></h1>
+    <?php endif; ?>
 
-<div id="cmap_<?= $this->id; ?>" style="width:100%;height: <?= $this->Map['height'] ?>"></div>
+    <?= $this->Map['description']; ?>
+    <div id="cmap_<?= $this->id; ?>" style="width:100%;height: <?= $this->Map['height'] ?>"></div>
+</div>
+
 
 <script type="text/javascript">
 
@@ -45,12 +48,12 @@
         L.tileLayer('<?= $this->Map['titleURL'] ?>', {
             maxZoom: max_zoom_<?= $this->id; ?>,
             minZoom: min_zoom_<?= $this->id; ?>,
+            attribution: '<?= $this->Map['copyright'] ?>'
         }).addTo(map_<?= $this->id; ?>);
 
-        map_<?= $this->id; ?>.attributionControl.setPrefix('<?= $this->Map['copyright'] ?>');
+        //map_<?= $this->id; ?>.attributionControl.setPrefix('<?= $this->Map['copyright'] ?>');
 
         $(points_<?= $this->id; ?>).each(function(index, value) {
-
             
             if (value.image){
 
