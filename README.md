@@ -1,2 +1,2 @@
 # Map
-Adds a Titlemap to Contao 4
+Adds a Tilemap to Contao 4
