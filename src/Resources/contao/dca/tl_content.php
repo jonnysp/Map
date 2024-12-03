@@ -11,6 +11,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['map'] = array
 	'sql'                     => "int(10) unsigned NOT NULL default '0'"
 );
 
+use Contao\Backend;
 
 class tl_content_map extends Backend 
 {

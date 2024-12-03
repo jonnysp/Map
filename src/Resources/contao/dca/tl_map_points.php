@@ -166,6 +166,8 @@ $GLOBALS['TL_DCA']['tl_map_points'] = array
 
 use Contao\Image\ResizeConfiguration;
 
+use Contao\Backend;
+
 class tl_map_points extends Backend{
 
 	public function generateReferenzRow($arrRow)	{
