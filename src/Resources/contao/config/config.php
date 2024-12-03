@@ -8,7 +8,11 @@
  * @license LGPL-3.0+
  */
 
-
+//  see https://docs.contao.org/dev/framework/models/customization/
+use App\Model\MapModel;
+use App\Model\MapPointsModel;
+$GLOBALS['TL_MODELS']['tl_map'] = MapModel::class;
+$GLOBALS['TL_MODELS']['tl_map_points'] = MapPointsModel::class;
 
 Contao\ArrayUtil::arrayInsert($GLOBALS['BE_MOD']['map'], 100, array
 (

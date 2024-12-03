@@ -1,4 +1,6 @@
 <?php
+use Contao\Widget;
+use Contao\StringUtil;
 
 class PositionSelectorField extends Widget
 {
@@ -91,7 +93,8 @@ class PositionSelectorField extends Widget
 			$arrFields[] = sprintf('<input type="text" name="%s[]" id="ctrl_%s" class="tl_text_3" value="%s" %s onfocus="Backend.getScrollOffset()">',
 									$this->strName,
 									$this->strId.'_'.$i,
-									specialchars(@$this->varValue[$i]), // see #4979
+									//	specialchars(@$this->varValue[$i]), // see #4979
+								    (@$this->varValue[$i]), // see #4979
 									$this->getAttributes());
 		}
 

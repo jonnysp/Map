@@ -1,8 +1,10 @@
 <?php
+namespace App\Model;
 
-class MapModel extends \Model
+use Contao\Model;
+
+//  see https://docs.contao.org/dev/framework/models/customization/
+class MapModel extends Model
 {
     protected static $strTable = 'tl_map';
-
-
 }
