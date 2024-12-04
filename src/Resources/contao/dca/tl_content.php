@@ -1,4 +1,7 @@
 <?php
+use Contao\Backend;
+use Contao\Model;
+use App\MapModel;
 
 $GLOBALS['TL_DCA']['tl_content']['palettes']['map_viewer'] = '{type_legend},type;{map_legend},map;{protected_legend:hide},protected;{expert_legend:hide},cssID,space;{invisible_legend:hide},invisible,start,stop';
 $GLOBALS['TL_DCA']['tl_content']['fields']['map'] = array
@@ -11,14 +14,12 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['map'] = array
 	'sql'                     => "int(10) unsigned NOT NULL default '0'"
 );
 
-use Contao\Backend;
-
 class tl_content_map extends Backend 
 {
 
 	public function getMap()
 	{
-		$objCats =  \MapModel::findAll();
+		$objCats =  App\Model\MapModel::findAll();
 		$arrCats = array();
 		foreach ($objCats as $objCat)
 		{
