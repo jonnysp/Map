@@ -5,6 +5,7 @@ use Contao\Model;
 use Map\MapModel;
 use Contao\DataContainer;
 use Contao\StringUtil;
+use Contao\Image;
 
 // $GLOBALS['TL_DCA']['tl_content']['palettes']['map_viewer'] = '{type_legend},type;{map_legend},map;{protected_legend:hide},protected;{expert_legend:hide},cssID,space;{invisible_legend:hide},invisible,start,stop';
 $GLOBALS['TL_DCA']['tl_content']['palettes']['map_viewer'] = '{type_legend},type;{map_legend},map;{protected_legend:hide};{expert_legend:hide},cssID,space;{invisible_legend:hide},invisible,start,stop';
