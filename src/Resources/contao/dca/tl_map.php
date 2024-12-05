@@ -1,4 +1,5 @@
 <?php
+use Contao\DC_Table;
 
 /**
  * Table tl_map
@@ -9,16 +10,21 @@ $GLOBALS['TL_DCA']['tl_map'] = array
 	// Config
 	'config' => array
 	(
-		'dataContainer'               => 'Table',
+		'dataContainer'               => DC_Table::class, //	'Table',
 		'ctable'                      => array('tl_map_points'),
 		'enableVersioning'            => true,
-		'sql' => array
+		/* 'sql' => array
 		(
 			'keys' => array
 			(
 				'id' => 'primary'
 			)
-		)
+		)	*/
+		'sql' => [
+			'keys' => [
+				'id' => 'primary',
+			]
+		]  
 	),
 
 	// List

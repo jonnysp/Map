@@ -1,4 +1,5 @@
 <?php
+use Contao\Model;
 
 class MapViewer extends ContentElement
 {
@@ -6,14 +7,14 @@ class MapViewer extends ContentElement
 
 	public function generate()
 	{
-		if (TL_MODE == 'BE')
+		//	if (TL_MODE == 'BE')
 		{
 			$objMap = \MapModel::findByPK($this->map);
 			$objTemplate = new \BackendTemplate('be_wildcard');
 			$objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['tl_content']['map_legend']) . ' ###';
 			$objTemplate->title = '['. $objMap->id.'] - '. $objMap->title;
 			return $objTemplate->parse();	
-		}
+		//	}
 		return parent::generate();
 	}//end generate
 

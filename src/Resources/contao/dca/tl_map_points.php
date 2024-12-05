@@ -1,4 +1,5 @@
 <?php
+use Contao\DC_Table;
 
 /**
  * Table tl_map_points
@@ -9,7 +10,7 @@ $GLOBALS['TL_DCA']['tl_map_points'] = array
 	// Config
 	'config' => array
 	(
-		'dataContainer'               => 'Table',
+		'dataContainer'               => DC_Table::class, //	'Table',
 		'ptable'                      => 'tl_map',
 		'enableVersioning'            => true,
 		'sql' => array
@@ -128,7 +129,8 @@ $GLOBALS['TL_DCA']['tl_map_points'] = array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_map_points']['image'],
 			'inputType'               => 'fileTree',
-			'eval'                    => array('fieldType'=>'radio', 'files'=>true, 'filesOnly'=>true, 'extensions'=>$GLOBALS['TL_CONFIG']['validImageTypes']),
+			// 'eval'                    => array('fieldType'=>'radio', 'files'=>true, 'filesOnly'=>true, 'extensions'=>$GLOBALS['TL_CONFIG']['validImageTypes']),
+		   'eval'                    => array('fieldType'=>'radio', 'files'=>true, 'filesOnly'=>true, 'extensions'=>['jpg','jpeg','png']),
 			'sql'                     => ['type' => 'binary','notnull' => false,'length' => 16,'fixed' => true]
 		),
 		'description' => array
@@ -165,6 +167,8 @@ $GLOBALS['TL_DCA']['tl_map_points'] = array
 );
 
 use Contao\Image\ResizeConfiguration;
+
+use Contao\Backend;
 
 class tl_map_points extends Backend{
 

@@ -8,10 +8,13 @@
  * @license LGPL-3.0+
  */
 
+//  see https://docs.contao.org/dev/framework/models/customization/
+use App\Model\MapModel;
+use App\Model\MapPointsModel;
+$GLOBALS['TL_MODELS']['tl_map'] = MapModel::class;
+$GLOBALS['TL_MODELS']['tl_map_points'] = MapPointsModel::class;
 
-
-
-array_insert($GLOBALS['BE_MOD']['map'], 100, array
+Contao\ArrayUtil::arrayInsert($GLOBALS['BE_MOD']['map'], 100, array
 (
 	'map' 		=> array('tables' => array('tl_map', 'tl_map_points'))
 ));
@@ -19,18 +22,31 @@ array_insert($GLOBALS['BE_MOD']['map'], 100, array
 
 /**
  * Style sheet
- */
 if (TL_MODE == 'BE')
 {
 	$GLOBALS['TL_CSS'][] = 'bundles/jonnyspmap/map.css|static';
 	$GLOBALS['BE_FFL']['positionselectorfield'] = 'PositionSelectorField';
 }
+ */
 
+// das Konstrukt 
+// if (TL_MODE === 'BE')
+// kann durch folgende Zeilen ersetzt werden
+
+use Contao\System;
+use Symfony\Component\HttpFoundation\Request;
+if (System::getContainer()->get('contao.routing.scope_matcher')
+	->isBackendRequest(System::getContainer()->get('request_stack')->getCurrentRequest() ?? Request::create(''))
+)  
+{
+	$GLOBALS['TL_CSS'][] = 'bundles/jonnyspmap/map.css|static';
+	$GLOBALS['BE_FFL']['positionselectorfield'] = 'PositionSelectorField';
+}
 
 /**
  * Front end modules
  */
-array_insert($GLOBALS['TL_CTE'], 1, array
+Contao\ArrayUtil::arrayInsert($GLOBALS['TL_CTE'], 1, array
 	(
 		'includes' 	=> array
 			(
