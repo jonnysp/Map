@@ -57,18 +57,8 @@ $GLOBALS['TL_DCA']['tl_map_points'] = array
 				'attributes'          => 'onclick="Backend.getScrollOffset()" accesskey="e"'
 			)
 		),
-		
-		'operations' => array
-		(
 
-			'toggle' => array
-			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_map_points']['toggle'],
-				'icon'                => 'visible.svg',
-				'href'                => 'act=toggle&amp;field=published',
-				'button_callback'     => array('tl_map_points', 'toggleIcon')
-			)
-		)
+		'operations' => array()
 	),
 
 	// Palettes
@@ -137,6 +127,7 @@ $GLOBALS['TL_DCA']['tl_map_points'] = array
 		'published' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_map_points']['toggle'],
+            'toggle'                  => true,
 			'filter'                  => true,
 			'inputType'               => 'checkbox',
 			'eval'                    => array('submitOnChange'=>true, 'doNotCopy'=>true, 'tl_class'=>'w50'),
@@ -144,22 +135,3 @@ $GLOBALS['TL_DCA']['tl_map_points'] = array
 		)
 	)
 );
-
-
-
-class tl_map_points extends Backend{
-
-	public function toggleIcon($row, $href, $label, $title, $icon, $attributes)
-	{
-	
-		$href .= '&amp;id=' . $row['id'];
-
-		if (!$row['published'])
-		{
-			$icon = 'invisible.svg';
-		}
-
-      	return '<a href="' . $this->addToUrl($href) . '" title="' . StringUtil::specialchars($title) . '" data-title="' . StringUtil::specialchars($title) . '" data-title-disabled="' . StringUtil::specialchars($title) . '" data-action="contao--scroll-offset#store" onclick="return AjaxRequest.toggleField(this,true)">' . Image::getHtml($icon, $label, 'data-icon="visible.svg" data-icon-disabled="invisible.svg" data-state="' . ($row['published'] ? 1 : 0) . '"') . '</a> ';
-	}
-}
-
