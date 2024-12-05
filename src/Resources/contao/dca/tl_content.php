@@ -2,7 +2,7 @@
 use Contao\System;
 use Contao\Backend;
 use Contao\Model;
-use App\MapModel;
+use Map\MapModel;
 use Contao\DataContainer;
 use Contao\StringUtil;
 
@@ -23,7 +23,7 @@ class tl_content_map extends Backend
 
 	public function getMap()
 	{
-		$objCats =  App\Model\MapModel::findAll();
+		$objCats =  Map\Model\MapModel::findAll();
 		$arrCats = array();
 		foreach ($objCats as $objCat)
 		{
