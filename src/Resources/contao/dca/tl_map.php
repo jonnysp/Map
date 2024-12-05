@@ -42,51 +42,6 @@ $GLOBALS['TL_DCA']['tl_map'] = array
 			'fields'                  => array('id','title'),
 			'format'                  => '[%s] - %s'
 		),
-		
-		'global_operations' => array
-		(
-			'all' => array
-			(
-				'label'               => &$GLOBALS['TL_LANG']['MSC']['all'],
-				'href'                => 'act=select',
-				'class'               => 'header_edit_all',
-				'attributes'          => 'onclick="Backend.getScrollOffset()" accesskey="e"'
-			)
-		),
-		'operations' => array
-		(
-			'edit' => array
-			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_map']['edit'],
-				'href'                => 'table=tl_map_points',
-				'icon'                => 'edit.svg'
-			),
-			'editheader' => array
-			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_map']['editheader'],
-				'href'                => 'act=edit',
-				'icon'                => 'header.svg'
-			),
-			'copy' => array
-			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_map']['copy'],
-				'href'                => 'act=copy',
-				'icon'                => 'copy.svg'
-			),
-			'delete' => array
-			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_map']['delete'],
-				'href'                => 'act=delete',
-				'icon'                => 'delete.svg',
-				'attributes'          => 'onclick="if(!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\'))return false;Backend.getScrollOffset()"'
-			),
-			'show' => array
-			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_map']['show'],
-				'href'                => 'act=show',
-				'icon'                => 'show.svg'
-			)
-		)
 	),
 
 
@@ -184,7 +139,6 @@ $GLOBALS['TL_DCA']['tl_map'] = array
 			'eval'                    => array( 'tl_class'=>'w50','rgxp'=>'natural'),
 			'sql'                     => "int(10) NOT NULL default '19'"
 		)
-
 	)
 );
 
