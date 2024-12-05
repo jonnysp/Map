@@ -1,5 +1,9 @@
 <?php
-use Contao\Model;
+use Map\Model\MapModel;
+use Map\Model\MapPointsModel;
+use Contao\ContentElement;
+use Contao\BackendTemplate;
+use Contao\StringUtil; 
 
 class MapViewer extends ContentElement
 {
@@ -7,19 +11,19 @@ class MapViewer extends ContentElement
 
 	public function generate()
 	{
-		//	if (TL_MODE == 'BE'){
-		
-			$objMap = \MapModel::findByPK($this->map);
-			$objTemplate = new \BackendTemplate('be_wildcard');
+		//	if (TL_MODE == 'BE')
+		{
+			$objMap = MapModel::findByPK($this->map);
+			// $objTemplate = new \BackendTemplate('be_wildcard');
+			$objTemplate = new BackendTemplate('be_wildcard');
 			$objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['tl_content']['map_legend']) . ' ###';
 			$objTemplate->title = '['. $objMap->id.'] - '. $objMap->title;
 			return $objTemplate->parse();	
-		//	}
-
+		}
 		return parent::generate();
 	}//end generate
 
-	protected function compile()
+	protected function compile()	// ergibt Fehler syntax error, unexpected token "protected"
 	{
 
 		$GLOBALS['TL_JAVASCRIPT'][] = 'bundles/jonnyspmap/leaflet.js';
@@ -30,7 +34,7 @@ class MapViewer extends ContentElement
 		$this->loadLanguageFile('tl_map_points');
 
 		//gets the categorie
-		$objMap = \MapModel::findByPK($this->map);
+		$objMap = MapModel::findByPK($this->map);
 
 		try
 		{
@@ -60,7 +64,7 @@ class MapViewer extends ContentElement
 		$this->Template->Map = $Map;
 
 		$filter = array('column' => array('pid=?','published=?'),'value' => array($objMap->id,1));
-		$objPoints = \MapPointsModel::findAll($filter);
+		$objPoints = MapPointsModel::findAll($filter);
 
 		$points = array();	
 
