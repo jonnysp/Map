@@ -9,10 +9,6 @@
  */
 
 //  see https://docs.contao.org/dev/framework/models/customization/
-/*
-use App\Model\MapModel;
-use App\Model\MapPointsModel;
-*/
 use Map\Model\MapModel;
 use Map\Model\MapPointsModel;
 //	use Contao\Model;
@@ -20,9 +16,10 @@ $GLOBALS['TL_MODELS']['tl_map'] = MapModel::class;
 $GLOBALS['TL_MODELS']['tl_map_points'] = MapPointsModel::class;
 
 Contao\ArrayUtil::arrayInsert($GLOBALS['BE_MOD']['map'], 100, array
-(
-	'map' 		=> array('tables' => array('tl_map', 'tl_map_points'))
-));
+	(
+		'map' 		=> array('tables' => array('tl_map', 'tl_map_points'))
+	)
+);
 
 
 /**
@@ -59,5 +56,3 @@ Contao\ArrayUtil::arrayInsert($GLOBALS['TL_CTE'], 1, array
 			)
 	)
 );
-
-

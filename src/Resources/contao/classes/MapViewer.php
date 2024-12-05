@@ -4,14 +4,19 @@ use Map\Model\MapPointsModel;
 use Contao\ContentElement;
 use Contao\BackendTemplate;
 use Contao\StringUtil; 
-
+use Contao\System;	// siehe config.php
+use Symfony\Component\HttpFoundation\Request;
+		
 class MapViewer extends ContentElement
 {
 	protected $strTemplate = 'ce_mapviewer';
 
 	public function generate()
 	{
-		//	if (TL_MODE == 'BE')
+		//	if (TL_MODE == 'BE')	// siehe config.php
+		if (System::getContainer()->get('contao.routing.scope_matcher')
+			->isBackendRequest(System::getContainer()->get('request_stack')->getCurrentRequest() ?? Request::create(''))
+		)  
 		{
 			$objMap = MapModel::findByPK($this->map);
 			// $objTemplate = new \BackendTemplate('be_wildcard');
