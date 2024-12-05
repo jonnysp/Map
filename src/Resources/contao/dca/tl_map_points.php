@@ -1,5 +1,10 @@
 <?php
 use Contao\DC_Table;
+use Contao\Input;
+use Contao\StringUtil;
+use Contao\Image;
+use Contao\CoreBundle\Security\ContaoCorePermissions;
+use Contao\System;
 
 /**
  * Table tl_map_points
@@ -18,7 +23,7 @@ $GLOBALS['TL_DCA']['tl_map_points'] = array
 			'keys' => array
 			(
 				'id' => 'primary',
-				'pid' => 'index'
+				'pid,published' => 'index',
 			)
 		)
 	),
@@ -86,7 +91,7 @@ $GLOBALS['TL_DCA']['tl_map_points'] = array
 			(
 				'label'               => &$GLOBALS['TL_LANG']['tl_map_points']['toggle'],
 				'icon'                => 'visible.svg',
-				'attributes'          => 'onclick="Backend.getScrollOffset();return AjaxRequest.toggleVisibility(this,%s)"',
+				'href'                => 'act=toggle&amp;field=published',
 				'button_callback'     => array('tl_map_points', 'toggleIcon')
 			)
 		)
@@ -161,7 +166,7 @@ $GLOBALS['TL_DCA']['tl_map_points'] = array
 			'filter'                  => true,
 			'inputType'               => 'checkbox',
 			'eval'                    => array('submitOnChange'=>true, 'doNotCopy'=>true, 'tl_class'=>'w50'),
-			'sql'                     => "char(1) NOT NULL default ''"
+			'sql'                     => array('type' => 'boolean', 'default' => false)
 		)
 	)
 );
@@ -177,18 +182,18 @@ class tl_map_points extends Backend{
 
 		$label = $arrRow['title'];
 
-		if ($arrRow['image'] != '')
-		{
-			$objFile = FilesModel::findByUuid($arrRow['image']);
-			if ($objFile !== null)
-			{
-				$container = System::getContainer();
-				$rootDir = $container->getParameter('kernel.project_dir');
-
-				$label = Image::getHtml($container->get('contao.image.image_factory')->create($rootDir.'/'.$objFile->path,(new ResizeConfiguration())->setWidth(80)->setHeight(80)->setMode(ResizeConfiguration::MODE_BOX))->getUrl($rootDir), '', 'style="float:left;"') . ' ' . $label;
-
-			}
-		}
+//		if ($arrRow['image'] != '')
+//		{
+//			$objFile = FilesModel::findByUuid($arrRow['image']);
+//			if ($objFile !== null)
+//			{
+//				$container = System::getContainer();
+//				$rootDir = $container->getParameter('kernel.project_dir');
+//
+//				$label = Image::getHtml($container->get('contao.image.image_factory')->create($rootDir.'/'.$objFile->path,(new ResizeConfiguration())->setWidth(80)->setHeight(80)->setMode(ResizeConfiguration::MODE_BOX))->getUrl($rootDir), '', 'style="float:left;"') . ' ' . $label;
+//
+//			}
+//		}
 		return $label;
     }
 
@@ -205,50 +210,26 @@ class tl_map_points extends Backend{
 
 	public function toggleIcon($row, $href, $label, $title, $icon, $attributes)
 	{
-		if (strlen(Input::get('tid')))
+
+		$security = System::getContainer()->get('security.helper');
+
+		// Check permissions AFTER checking the tid, so hacking attempts are logged
+		if (!$security->isGranted(ContaoCorePermissions::USER_CAN_EDIT_FIELD_OF_TABLE, 'tl_map_points::published'))
 		{
-			$this->toggleVisibility(Input::get('tid'), (Input::get('state') == 1), (@func_get_arg(12) ?: null));
-			$this->redirect($this->getReferer());
+			return '';
 		}
 
-		$href .= '&amp;tid='.$row['id'].'&amp;state='.($row['published'] ? '' : 1);
+		$href .= '&amp;id=' . $row['id'];
 
 		if (!$row['published'])
 		{
-			$icon = 'invisible.gif';
+			$icon = 'invisible.svg';
 		}
 
-		return '<a href="'.$this->addToUrl($href).'" title="'.specialchars($title).'"'.$attributes.'>'.Image::getHtml($icon, $label).'</a> ';
+        return '<a href="'.$this->addToUrl($href).'" title="'.StringUtil::specialchars($title) . '" data-title="' . StringUtil::specialchars($title) . '" data-title-disabled="' . StringUtil::specialchars($title) . '" data-action="contao--scroll-offset#store" onclick="return AjaxRequest.toggleField(this,true)">' . Image::getHtml($icon, $label, 'data-icon="visible.svg" data-icon-disabled="invisible.svg" data-state="' . ($row['published'] ? 1 : 0) . '"') . '</a> ';
+
 	}
 
-
-	public function toggleVisibility($intId, $blnVisible, DataContainer $dc=null)
-	{
-
-		Input::setGet('id', $intId);
-		Input::setGet('act', 'toggle');
-
-		// Trigger the save_callback
-		if (is_array($GLOBALS['TL_DCA']['tl_map_points']['fields']['published']['save_callback']))
-		{
-			foreach ($GLOBALS['TL_DCA']['tl_map_points']['fields']['published']['save_callback'] as $callback)
-			{
-				if (is_array($callback))
-				{
-					$this->import($callback[0]);
-					$blnVisible = $this->$callback[0]->$callback[1]($blnVisible, ($dc ?: $this));
-				}
-				elseif (is_callable($callback))
-				{
-					$blnVisible = $callback($blnVisible, ($dc ?: $this));
-				}
-			}
-		}
-
-		// Update the database
-		$this->Database->prepare("UPDATE tl_map_points SET tstamp=". time() .", published='" . ($blnVisible ? 1 : '') . "' WHERE id=?")
-					   ->execute($intId);
-	}
 
 }
 
