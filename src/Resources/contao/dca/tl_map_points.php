@@ -7,6 +7,7 @@ use Contao\System;
 use Contao\DataContainer;
 use Contao\Backend;
 
+
 /**
  * Table tl_map_points
  */
@@ -108,7 +109,7 @@ $GLOBALS['TL_DCA']['tl_map_points'] = array
 			'label'                   => &$GLOBALS['TL_LANG']['tl_map_points']['image'],
 			'inputType'               => 'fileTree',
 			// 'eval'                    => array('fieldType'=>'radio', 'files'=>true, 'filesOnly'=>true, 'extensions'=>$GLOBALS['TL_CONFIG']['validImageTypes']),
-		   'eval'                    => array('fieldType'=>'radio', 'files'=>true, 'filesOnly'=>true, 'extensions'=>['jpg','jpeg','png']),
+		    'eval'                    => array('fieldType'=>'radio', 'files'=>true, 'filesOnly'=>true, 'extensions'=>['jpg','jpeg','png']),
 			'sql'                     => ['type' => 'binary','notnull' => false,'length' => 16,'fixed' => true]
 		),
 		'description' => array
