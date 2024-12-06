@@ -20,7 +20,7 @@ $GLOBALS['TL_DCA']['tl_map'] = array
 			(
 				'id' => 'primary'
 			)
-		)	
+		)
 	),
 
 

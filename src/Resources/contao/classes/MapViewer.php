@@ -2,12 +2,9 @@
 
 use Contao\ContentElement;
 use Contao\BackendTemplate;
-use Contao\StringUtil; 
 use Contao\System;
 use Contao\FilesModel;
 use Contao\File;
-use Symfony\Component\HttpFoundation\Request;
-
 use Map\Model\MapModel;
 use Map\Model\MapPointsModel;
 
@@ -15,28 +12,28 @@ class MapViewer extends ContentElement
 {
 	protected $strTemplate = 'ce_mapviewer';
 
-	public function generate()
+	public function generate(): string
 	{
-		if (System::getContainer()->get('contao.routing.scope_matcher')
-			->isBackendRequest(System::getContainer()->get('request_stack')->getCurrentRequest() ?? Request::create(''))
-		)  
+		$request = System::getContainer()->get('request_stack')->getCurrentRequest();
+
+		if ($request && System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest($request))
 		{
 			$objMap = MapModel::findByPK($this->map);
 			$objTemplate = new BackendTemplate('be_wildcard');
-			$objTemplate->wildcard = '### ' . strtoupper($GLOBALS['TL_LANG']['tl_content']['map_legend']) . ' ###';
+			$objTemplate->wildcard = '### ' . $GLOBALS['TL_LANG']['tl_content']['map_legend'] . ' ###';
 			$objTemplate->title = '['. $objMap->id.'] - '. $objMap->title;
-			return $objTemplate->parse();	
+
+			return $objTemplate->parse();
 		}
+
 		return parent::generate();
-	}//end generate
+	}
 
-	protected function compile()
+	protected function compile(): void
 	{
-
 		$GLOBALS['TL_JAVASCRIPT'][] = 'bundles/jonnyspmap/leaflet.js';
 		$GLOBALS['TL_CSS'][] = 		  'bundles/jonnyspmap/leaflet.css';
 
-		global $objPage;
 		$this->loadLanguageFile('tl_map');
 		$this->loadLanguageFile('tl_map_points');
 
@@ -73,12 +70,12 @@ class MapViewer extends ContentElement
 		$filter = array('column' => array('pid=?','published=?'),'value' => array($objMap->id,1));
 		$objPoints = MapPointsModel::findAll($filter);
 
-		$points = array();	
+		$points = array();
 
-		if (isset($objPoints) && count($objPoints) > 0){
-
-			foreach ($objPoints as $key => $value) {
-
+		if (null !== $objPoints)
+		{
+			foreach ($objPoints as $key => $value)
+			{
 				try
 				{
 					$position = unserialize($value->position);
@@ -118,14 +115,9 @@ class MapViewer extends ContentElement
 						"info" => boolval($value->info)
 					);
 				}
-
-				
 			}
-
 		}
-		
-	$this->Template->Points = $points;
 
-	}//end compile
-
-}//end class
+		$this->Template->Points = $points;
+	}
+}
