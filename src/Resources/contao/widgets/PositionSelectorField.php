@@ -6,11 +6,11 @@ class PositionSelectorField extends Widget
 {
 
 	protected $strTemplate = 'be_widget';
-	protected $blnSubmitInput = true;	
+	protected $blnSubmitInput = true;
 
 	public function generate()
 	{
-		
+
 		$GLOBALS['TL_JAVASCRIPT'][] = 'bundles/jonnyspmap/leaflet.js';
 		$GLOBALS['TL_CSS'][] = 		  'bundles/jonnyspmap/leaflet.css';
 
@@ -19,19 +19,19 @@ class PositionSelectorField extends Widget
 		echo  '<div class="tl_text" id="'.$olmapname .'_canvas" style="width:auto; height:300px;"></div>
 
 				<script type="text/javascript">
-					
+
 					var '.$olmapname.'default_zoom = 3;
 					var '.$olmapname.'min_zoom = 1;
 					var '.$olmapname.'max_zoom = 19;
 					var '.$olmapname.'marker = {};
-					var '.$olmapname.'markerpos = ['.(isset($this->varValue[0]) ? $this->varValue[0] : 0).' ,'.(isset($this->varValue[1]) ? $this->varValue[1] : 0).'];
-					var '.$olmapname.'markerzoom = '.(isset($this->varValue[2]) ? $this->varValue[2] : 5).';
+					var '.$olmapname.'markerpos = ['.($this->varValue[0] ?: 0).' ,'.($this->varValue[1] ?: 0).'];
+					var '.$olmapname.'markerzoom = '.($this->varValue[2] ?: 5).';
 
 					var markerIcon = L.icon({
 					    iconUrl: "bundles/jonnyspmap/images/marker-icon.png",
-					    iconSize:     [25,41], 
-					    iconAnchor:   [12, 41], 
-					    popupAnchor:  [1, -30] 
+					    iconSize:     [25,41],
+					    iconAnchor:   [12, 41],
+					    popupAnchor:  [1, -30]
 					});
 
 					function onZoomed(e){
@@ -75,7 +75,7 @@ class PositionSelectorField extends Widget
 
 					window.addEvent("domready", function() {
 						'.$olmapname.'initialize();
-					});					
+					});
 
 			</script>';
 
