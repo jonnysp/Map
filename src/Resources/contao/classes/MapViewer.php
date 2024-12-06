@@ -29,7 +29,7 @@ class MapViewer extends ContentElement
 		return parent::generate();
 	} //end generate
 
-	protected function compile()	// ergibt Fehler syntax error, unexpected token "protected"
+	protected function compile()
 	{
 
 		$GLOBALS['TL_JAVASCRIPT'][] = 'bundles/jonnyspmap/leaflet.js';
