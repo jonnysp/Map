@@ -1,12 +1,7 @@
 <?php
-use Contao\DC_Table;
-use Contao\Input;
-use Contao\StringUtil;
-use Contao\Image;
-use Contao\System;
-use Contao\DataContainer;
-use Contao\Backend;
 
+use Contao\DC_Table;
+use Contao\DataContainer;
 
 /**
  * Table tl_map_points
@@ -15,94 +10,111 @@ $GLOBALS['TL_DCA']['tl_map_points'] = array
 (
 
 	// Config
-	'config' => array(
+	'config' => array
+	(
 		'dataContainer'               => DC_Table::class, //	'Table',
 		'ptable'                      => 'tl_map',
 		'enableVersioning'            => true,
 		'markAsCopy'                  => 'title',
-		'sql' => array(
-			'keys' => array(
+		'sql' => array
+		(
+			'keys' => array
+			(
 				'id' => 'primary',
-				'pid,published' => 'index',
+				'pid,published' => 'index'
 			)
 		)
 	),
 
 	// List
-	'list' => array(
-		'sorting' => array(
-			'mode'                    => DataContainer::MODE_SORTED,
+	'list' => array
+	(
+		'sorting' => array
+		(
+			'mode'                    => DataContainer::MODE_PARENT,
 			'fields'                  => array('title'),
+			'headerFields'            => array('title', 'tstamp'),
 			'flag'                    => DataContainer::SORT_INITIAL_LETTER_ASC,
 			'panelLayout'             => 'filter;search,limit',
 			'defaultSearchField'      => 'title'
 		),
-		'label' => array(
+		'label' => array
+		(
 			'fields'                  => array('title'),
 			'format'                  => '%s'
 		),
 	),
 
 	// Palettes
-	'palettes' => array(
+	'palettes' => array
+	(
 		'default'                     => '{title_legend},title,published;{image_legend},image;{description_legend},info,description,position;'
 	),
 
 	// Fields
-	'fields' => array(
-		'id' => array(
+	'fields' => array
+	(
+		'id' => array
+		(
 			'sql'                     => "int(10) unsigned NOT NULL auto_increment"
 		),
-		'pid' => array(
+		'pid' => array
+		(
 			'sql'                     => "int(10) unsigned NOT NULL default '0'"
 		),
-		'sorting' => array(
+		'sorting' => array
+		(
 			'sql'                     => "int(10) unsigned NOT NULL default '0'"
 		),
-		'tstamp' => array(
-			'sql'                     => ['type' => 'integer', 'notnull' => false, 'unsigned' => true, 'default' => '0', 'fixed' => true]
+		'tstamp' => array
+		(
+			'sql'                     => ['type' => 'integer','notnull' => false, 'unsigned' => true,'default' => '0','fixed' => true]
 		),
-		'title' => array(
+		'title' => array
+		(
 			'label'                 => &$GLOBALS['TL_LANG']['tl_map_points']['title'],
 			'search'              	=> true,
 			'inputType'          	=> 'text',
-			'eval'                  => array('mandatory' => true, 'maxlength' => 128, 'tl_class' => 'w50'),
+			'eval'                  => array('mandatory'=>true, 'maxlength'=>128, 'tl_class'=>'w50'),
 			'sql'                   => ['type' => 'string', 'length' => 128, 'default' => '']
 		),
-		'image' => array(
+		'image' => array
+		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_map_points']['image'],
 			'inputType'               => 'fileTree',
-			// 'eval'                    => array('fieldType'=>'radio', 'files'=>true, 'filesOnly'=>true, 'extensions'=>$GLOBALS['TL_CONFIG']['validImageTypes']),
-			'eval'                    => array('fieldType' => 'radio', 'files' => true, 'filesOnly' => true, 'extensions' => ['jpg', 'jpeg', 'png']),
-			'sql'                     => ['type' => 'binary', 'notnull' => false, 'length' => 16, 'fixed' => true]
+			'eval'                    => array('fieldType'=>'radio', 'files'=>true, 'filesOnly'=>true, 'extensions'=>'%contao.image.valid_extensions%'),
+			'sql'                     => ['type' => 'binary','notnull' => false,'length' => 16,'fixed' => true]
 		),
-		'description' => array(
+		'description' => array
+		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_map_points']['description'],
 			'inputType'               => 'textarea',
-			'eval'                    => array('allowHtml' => true, 'class' => 'monospace', 'rte' => 'ace|html', 'tl_class' => 'clr'),
+			'eval'                    => array('allowHtml'=>true, 'class'=>'monospace', 'rte'=>'ace|html', 'tl_class'=>'clr'),
 			'sql'                     => "text NULL"
 		),
-		'info' => array(
+		'info' => array
+		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_map_points']['info'],
 			'inputType'               => 'checkbox',
 			'isBoolean'				  => true,
-			'eval'                    => array('tl_class' => 'w50'),
+			'eval'                    => array( 'tl_class'=>'w50'),
 			'sql'                     => "char(1) NOT NULL default ''"
 		),
-		'position' => array(
+		'position' => array
+		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_map_points']['position'],
 			'inputType'           	  => 'positionselectorfield',
-			'eval'                    => array('rgxp' => 'digit', 'tl_class' => 'clr', 'nospace' => false),
+			'eval'                    => array('rgxp'=>'digit', 'tl_class'=>'clr', 'nospace'=>false),
 			'sql'					  => "varchar(128) NOT NULL default ''"
 		),
-		'published' => array(
+		'published' => array
+		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_map_points']['toggle'],
 			'toggle'                  => true,
 			'filter'                  => true,
 			'inputType'               => 'checkbox',
-			'eval'                    => array('submitOnChange' => true, 'doNotCopy' => true, 'tl_class' => 'w50'),
+			'eval'                    => array('submitOnChange'=>true, 'doNotCopy'=>true, 'tl_class'=>'w50 m12'),
 			'sql'                     => array('type' => 'boolean', 'default' => false)
 		)
 	)
 );
-

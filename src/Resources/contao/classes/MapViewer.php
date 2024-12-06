@@ -1,50 +1,51 @@
 <?php
 
-use Map\Model\MapModel;
-use Map\Model\MapPointsModel;
 use Contao\ContentElement;
 use Contao\BackendTemplate;
+use Contao\System;
+use Contao\FilesModel;
 use Contao\File;
-use Contao\System;	// siehe config.php
-use Symfony\Component\HttpFoundation\Request;
+use Map\Model\MapModel;
+use Map\Model\MapPointsModel;
 
 class MapViewer extends ContentElement
 {
 	protected $strTemplate = 'ce_mapviewer';
 
-	public function generate()
+	public function generate(): string
 	{
-		//	if (TL_MODE == 'BE')	// siehe config.php
-		if (System::getContainer()->get('contao.routing.scope_matcher')
-			->isBackendRequest(System::getContainer()->get('request_stack')->getCurrentRequest() ?? Request::create(''))
-		) {
+		$request = System::getContainer()->get('request_stack')->getCurrentRequest();
+
+		if ($request && System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest($request))
+		{
 			$objMap = MapModel::findByPK($this->map);
-			// $objTemplate = new \BackendTemplate('be_wildcard');
 			$objTemplate = new BackendTemplate('be_wildcard');
-			// $objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['tl_content']['map_legend']) . ' ###';
-			$objTemplate->wildcard = '### ' . strtoupper($GLOBALS['TL_LANG']['tl_content']['map_legend']) . ' ###';
-			$objTemplate->title = '[' . $objMap->id . '] - ' . $objMap->title;
+			$objTemplate->wildcard = '### ' . $GLOBALS['TL_LANG']['tl_content']['map_legend'] . ' ###';
+			$objTemplate->title = '['. $objMap->id.'] - '. $objMap->title;
+
 			return $objTemplate->parse();
 		}
+
 		return parent::generate();
-	} //end generate
+	}
 
-	protected function compile()
+	protected function compile(): void
 	{
-
 		$GLOBALS['TL_JAVASCRIPT'][] = 'bundles/jonnyspmap/leaflet.js';
 		$GLOBALS['TL_CSS'][] = 		  'bundles/jonnyspmap/leaflet.css';
 
-		global $objPage;
 		$this->loadLanguageFile('tl_map');
 		$this->loadLanguageFile('tl_map_points');
 
 		//gets the categorie
 		$objMap = MapModel::findByPK($this->map);
 
-		try {
+		try
+		{
 			$mapposition = unserialize($objMap->position);
-		} catch (Exception $e) {
+		}
+		catch (Exception $e)
+		{
 			$mapposition = array();
 		}
 
@@ -66,25 +67,28 @@ class MapViewer extends ContentElement
 
 		$this->Template->Map = $Map;
 
-		$filter = array('column' => array('pid=?', 'published=?'), 'value' => array($objMap->id, 1));
+		$filter = array('column' => array('pid=?','published=?'),'value' => array($objMap->id,1));
 		$objPoints = MapPointsModel::findAll($filter);
 
 		$points = array();
 
-
-		if ($objPoints != NULL) {
-			foreach ($objPoints as $key => $value) {
-
-				try {
+		if (null !== $objPoints)
+		{
+			foreach ($objPoints as $key => $value)
+			{
+				try
+				{
 					$position = unserialize($value->position);
-				} catch (Exception $e) {
+				}
+				catch (Exception $e)
+				{
 					$position = array();
 				}
 
 
 				if (isset($value->image)) {
 
-					$imagemodel = \FilesModel::findByPk($value->image);
+					$imagemodel = FilesModel::findByPk($value->image);
 					$objFile = new File($imagemodel->path);
 
 					$points[$key] = array(
@@ -97,7 +101,8 @@ class MapViewer extends ContentElement
 						"description" =>  $value->description,
 						"info" => boolval($value->info)
 					);
-				} else {
+
+				}else{
 
 					$points[$key] = array(
 						"title" => $value->title,
@@ -114,6 +119,5 @@ class MapViewer extends ContentElement
 		}
 
 		$this->Template->Points = $points;
-	} //end compile
-
-}//end class
+	}
+}
