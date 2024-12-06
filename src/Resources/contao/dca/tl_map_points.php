@@ -1,11 +1,11 @@
 <?php
 use Contao\DC_Table;
 use Contao\Input;
-use Contao\StringUtil;
-use Contao\Image;
+//use Contao\StringUtil;
+//use Contao\Image;
 use Contao\System;
 use Contao\DataContainer;
-use Contao\Backend;
+//use Contao\Backend;
 
 
 /**

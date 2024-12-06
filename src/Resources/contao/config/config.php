@@ -8,17 +8,12 @@
  * @license LGPL-3.0+
  */
 
-//  see https://docs.contao.org/dev/framework/models/customization/
-/*
+
 use App\Model\MapModel;
 use App\Model\MapPointsModel;
-*/
-use App\Model\MapModel;
-//use App\Model\MapPointsModel;
-//
-////	use Contao\Model;
+
 $GLOBALS['TL_MODELS']['tl_map'] = MapModel::class;
-//$GLOBALS['TL_MODELS']['tl_map_points'] = MapPointsModel::class;
+$GLOBALS['TL_MODELS']['tl_map_points'] = MapPointsModel::class;
 
 Contao\ArrayUtil::arrayInsert($GLOBALS['BE_MOD']['map'], 100, array
 (
@@ -28,17 +23,7 @@ Contao\ArrayUtil::arrayInsert($GLOBALS['BE_MOD']['map'], 100, array
 
 /**
  * Style sheet
-if (TL_MODE == 'BE')
-{
-	$GLOBALS['TL_CSS'][] = 'bundles/jonnyspmap/map.css|static';
-	$GLOBALS['BE_FFL']['positionselectorfield'] = 'PositionSelectorField';
-}
  */
-
-// das Konstrukt 
-// if (TL_MODE === 'BE')
-// kann durch folgende Zeilen ersetzt werden
-
 use Contao\System;
 use Symfony\Component\HttpFoundation\Request;
 if (System::getContainer()->get('contao.routing.scope_matcher')
