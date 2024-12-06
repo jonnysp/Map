@@ -12,6 +12,7 @@ $GLOBALS['TL_DCA']['tl_map'] = array
 	(
 		'dataContainer'               => DC_Table::class,
 		'ctable'                      => array('tl_map_points'),
+		'markAsCopy'                  => 'title',
 		'enableVersioning'            => true,
 		 'sql' => array
 		(
