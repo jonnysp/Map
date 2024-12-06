@@ -1,12 +1,13 @@
 <?php
+
 use Map\Model\MapModel;
 use Map\Model\MapPointsModel;
 use Contao\ContentElement;
 use Contao\BackendTemplate;
-use Contao\StringUtil; 
+use Contao\File;
 use Contao\System;	// siehe config.php
 use Symfony\Component\HttpFoundation\Request;
-		
+
 class MapViewer extends ContentElement
 {
 	protected $strTemplate = 'ce_mapviewer';
@@ -16,18 +17,17 @@ class MapViewer extends ContentElement
 		//	if (TL_MODE == 'BE')	// siehe config.php
 		if (System::getContainer()->get('contao.routing.scope_matcher')
 			->isBackendRequest(System::getContainer()->get('request_stack')->getCurrentRequest() ?? Request::create(''))
-		)  
-		{
+		) {
 			$objMap = MapModel::findByPK($this->map);
 			// $objTemplate = new \BackendTemplate('be_wildcard');
 			$objTemplate = new BackendTemplate('be_wildcard');
 			// $objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['tl_content']['map_legend']) . ' ###';
 			$objTemplate->wildcard = '### ' . strtoupper($GLOBALS['TL_LANG']['tl_content']['map_legend']) . ' ###';
-			$objTemplate->title = '['. $objMap->id.'] - '. $objMap->title;
-			return $objTemplate->parse();	
+			$objTemplate->title = '[' . $objMap->id . '] - ' . $objMap->title;
+			return $objTemplate->parse();
 		}
 		return parent::generate();
-	}//end generate
+	} //end generate
 
 	protected function compile()	// ergibt Fehler syntax error, unexpected token "protected"
 	{
@@ -42,12 +42,9 @@ class MapViewer extends ContentElement
 		//gets the categorie
 		$objMap = MapModel::findByPK($this->map);
 
-		try
-		{
+		try {
 			$mapposition = unserialize($objMap->position);
-		}
-		catch (Exception $e)
-		{
+		} catch (Exception $e) {
 			$mapposition = array();
 		}
 
@@ -69,26 +66,23 @@ class MapViewer extends ContentElement
 
 		$this->Template->Map = $Map;
 
-		$filter = array('column' => array('pid=?','published=?'),'value' => array($objMap->id,1));
+		$filter = array('column' => array('pid=?', 'published=?'), 'value' => array($objMap->id, 1));
 		$objPoints = MapPointsModel::findAll($filter);
 
-		$points = array();	
+		$points = array();
 
 
 		foreach ($objPoints as $key => $value) {
 
-			try
-			{
+			try {
 				$position = unserialize($value->position);
-			}
-			catch (Exception $e)
-			{
+			} catch (Exception $e) {
 				$position = array();
 			}
 
 
 			if (isset($value->image)) {
-			   
+
 				$imagemodel = \FilesModel::findByPk($value->image);
 				$objFile = new File($imagemodel->path);
 
@@ -102,8 +96,7 @@ class MapViewer extends ContentElement
 					"description" =>  $value->description,
 					"info" => boolval($value->info)
 				);
-
-			}else{
+			} else {
 
 				$points[$key] = array(
 					"title" => $value->title,
@@ -116,12 +109,9 @@ class MapViewer extends ContentElement
 					"info" => boolval($value->info)
 				);
 			}
-
-			
 		}
-		
-		$this->Template->Points = $points;
 
-	}//end compile
+		$this->Template->Points = $points;
+	} //end compile
 
 }//end class
