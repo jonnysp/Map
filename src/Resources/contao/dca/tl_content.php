@@ -2,9 +2,7 @@
 
 use Contao\System;
 use Contao\Backend;
-use Contao\Model;
 use Map\Model\MapModel;
-use Map\Model\MapPointsModel;
 use Contao\DataContainer;
 use Contao\StringUtil;
 use Contao\Image;
@@ -36,13 +34,11 @@ class tl_content_map extends Backend
 
 	public function editMap(DataContainer $dc)
 	{
-
 		$this->loadLanguageFile('tl_map');
 
 		$title = sprintf($GLOBALS['TL_LANG']['tl_map']['editheader'][1], $dc->value);
 		$href = System::getContainer()->get('router')->generate('contao_backend', array('do'=>'map', 'table'=>'tl_map','act'=>'edit', 'id'=>$dc->value , 'popup'=>'1', 'nb'=>'1'));
 		return ' <a href="' . StringUtil::specialcharsUrl($href) . '" title="' . StringUtil::specialchars($title) . '" onclick="Backend.openModalIframe({\'title\':\'' . StringUtil::specialchars(str_replace("'", "\\'", $title)) . '\',\'url\':this.href});return false">' . Image::getHtml('alias.svg', $title) . '</a>';
-		
 	}
 
 }

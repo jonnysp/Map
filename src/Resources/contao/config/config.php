@@ -11,11 +11,14 @@
 
 use Map\Model\MapModel;
 use Map\Model\MapPointsModel;
+use Contao\ArrayUtil;
+use Contao\System;
+use Symfony\Component\HttpFoundation\Request;
 
 $GLOBALS['TL_MODELS']['tl_map'] = MapModel::class;
 $GLOBALS['TL_MODELS']['tl_map_points'] = MapPointsModel::class;
 
-Contao\ArrayUtil::arrayInsert($GLOBALS['BE_MOD']['map'], 100, array
+ArrayUtil::arrayInsert($GLOBALS['BE_MOD']['map'], 100, array
 (
 	'map' 		=> array('tables' => array('tl_map', 'tl_map_points'))
 ));
@@ -24,8 +27,6 @@ Contao\ArrayUtil::arrayInsert($GLOBALS['BE_MOD']['map'], 100, array
 /**
  * Style sheet
  */
-use Contao\System;
-use Symfony\Component\HttpFoundation\Request;
 if (System::getContainer()->get('contao.routing.scope_matcher')
 	->isBackendRequest(System::getContainer()->get('request_stack')->getCurrentRequest() ?? Request::create(''))
 )  
@@ -37,7 +38,7 @@ if (System::getContainer()->get('contao.routing.scope_matcher')
 /**
  * Front end modules
  */
-Contao\ArrayUtil::arrayInsert($GLOBALS['TL_CTE'], 1, array
+ArrayUtil::arrayInsert($GLOBALS['TL_CTE'], 1, array
 	(
 		'includes' 	=> array
 			(

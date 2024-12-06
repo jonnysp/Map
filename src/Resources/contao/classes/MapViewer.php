@@ -90,7 +90,7 @@ class MapViewer extends ContentElement
 
 			if (isset($value->image)) {
 
-				$imagemodel = FilesModel::findByUuid($value->image);
+				$imagemodel = FilesModel::findByPk($value->image);
 				$objFile = new File($imagemodel->path);
 
 				$points[$key] = array(

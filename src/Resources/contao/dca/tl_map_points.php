@@ -1,12 +1,7 @@
 <?php
-use Contao\DC_Table;
-use Contao\Input;
-//use Contao\StringUtil;
-//use Contao\Image;
-use Contao\System;
-use Contao\DataContainer;
-//use Contao\Backend;
 
+use Contao\DC_Table;
+use Contao\DataContainer;
 
 /**
  * Table tl_map_points
@@ -20,12 +15,13 @@ $GLOBALS['TL_DCA']['tl_map_points'] = array
 		'dataContainer'               => DC_Table::class, //	'Table',
 		'ptable'                      => 'tl_map',
 		'enableVersioning'            => true,
+		'markAsCopy'                  => 'label',
 		'sql' => array
 		(
 			'keys' => array
 			(
 				'id' => 'primary',
-				'pid,published' => 'index',
+				'pid,published' => 'index'
 			)
 		)
 	),

@@ -10,22 +10,18 @@ $GLOBALS['TL_DCA']['tl_map'] = array
 	// Config
 	'config' => array
 	(
-		'dataContainer'               => DC_Table::class, //	'Table',
+		'dataContainer'               => DC_Table::class,
 		'ctable'                      => array('tl_map_points'),
 		'enableVersioning'            => true,
-		/* 'sql' => array
+		 'sql' => array
 		(
 			'keys' => array
 			(
 				'id' => 'primary'
 			)
-		)	*/
-		'sql' => [
-			'keys' => [
-				'id' => 'primary',
-			]
-		]  
+		)	
 	),
+
 
 	// List
 	'list' => array
