@@ -15,11 +15,11 @@
 	var points_<?= $this->id; ?> = <?= json_encode($this->Points) ?>;
     var map_<?= $this->id; ?>;
 
-    var default_zoom_<?= $this->id; ?> = <?= $this->Map['zoom'] ?>;
-    var default_pos_<?= $this->id; ?> = [<?= $this->Map['latitude'] ?>, <?= $this->Map['longitude'] ?>];
-    var min_zoom_<?= $this->id; ?> = <?= $this->Map['minzoom'] ?>;
-    var max_zoom_<?= $this->id; ?> = <?= $this->Map['maxzoom'] ?>;
-    var markers_<?= $this->id; ?> = new Array();
+    var default_zoom_<?= $this->id; ?> = <?= $this->Map['zoom'] ?: 0 ?>;
+    var default_pos_<?= $this->id; ?> = [<?= $this->Map['latitude'] ?: 0 ?>, <?= $this->Map['longitude'] ?: 0 ?>];
+    var min_zoom_<?= $this->id; ?> = <?= $this->Map['minzoom'] ?: 0 ?>;
+    var max_zoom_<?= $this->id; ?> = <?= $this->Map['maxzoom'] ?: 0 ?>;
+    var markers_<?= $this->id; ?> = [];
 
     var LeafIcon = L.Icon.extend({});
 
@@ -54,7 +54,7 @@
         //map_<?= $this->id; ?>.attributionControl.setPrefix('<?= $this->Map['copyright'] ?>');
 
         $(points_<?= $this->id; ?>).each(function(index, value) {
-            
+
             if (value.image){
 
                     var cicon = new LeafIcon({
@@ -62,8 +62,8 @@
                                     iconSize: [value.size[0], value.size[1]],
                                     iconAnchor: [value.size[0]/2, value.size[1]/2],
                                     popupAnchor:  [0, value.size[1]/3 * -1 ]
-                                }); 
-        
+                                });
+
 
                     if( value.info == true){
                         markers_<?= $this->id; ?>.push(L.marker([value.latitude, value.longitude], {zoom: value.zoom, icon: cicon }).on('click', MarkerClick_<?= $this->id; ?>).bindPopup(value.description).addTo(map_<?= $this->id; ?>))
@@ -98,6 +98,6 @@
 
 </script>
 
-<?php 
+<?php
 //$this->showTemplateVars();
 ?>

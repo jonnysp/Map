@@ -31,8 +31,9 @@ $GLOBALS['TL_DCA']['tl_map_points'] = array
 	(
 		'sorting' => array
 		(
-			'mode'                    => DataContainer::MODE_SORTED,
+			'mode'                    => DataContainer::MODE_PARENT,
 			'fields'                  => array('title'),
+			'headerFields'            => array('title', 'tstamp'),
 			'flag'                    => DataContainer::SORT_INITIAL_LETTER_ASC,
 			'panelLayout'             => 'filter;search,limit',
 			'defaultSearchField'      => 'title'
@@ -81,8 +82,7 @@ $GLOBALS['TL_DCA']['tl_map_points'] = array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_map_points']['image'],
 			'inputType'               => 'fileTree',
-			// 'eval'                    => array('fieldType'=>'radio', 'files'=>true, 'filesOnly'=>true, 'extensions'=>$GLOBALS['TL_CONFIG']['validImageTypes']),
-		    'eval'                    => array('fieldType'=>'radio', 'files'=>true, 'filesOnly'=>true, 'extensions'=>['jpg','jpeg','png']),
+			'eval'                    => array('fieldType'=>'radio', 'files'=>true, 'filesOnly'=>true, 'extensions'=>'%contao.image.valid_extensions%'),
 			'sql'                     => ['type' => 'binary','notnull' => false,'length' => 16,'fixed' => true]
 		),
 		'description' => array
@@ -113,7 +113,7 @@ $GLOBALS['TL_DCA']['tl_map_points'] = array
 			'toggle'                  => true,
 			'filter'                  => true,
 			'inputType'               => 'checkbox',
-			'eval'                    => array('submitOnChange'=>true, 'doNotCopy'=>true, 'tl_class'=>'w50'),
+			'eval'                    => array('submitOnChange'=>true, 'doNotCopy'=>true, 'tl_class'=>'w50 m12'),
 			'sql'                     => array('type' => 'boolean', 'default' => false)
 		)
 	)
