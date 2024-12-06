@@ -75,50 +75,53 @@ class MapViewer extends ContentElement
 
 		$points = array();	
 
+		if (isset($objPoints) && count($objPoints) > 0){
 
-		foreach ($objPoints as $key => $value) {
+			foreach ($objPoints as $key => $value) {
 
-			try
-			{
-				$position = unserialize($value->position);
+				try
+				{
+					$position = unserialize($value->position);
+				}
+				catch (Exception $e)
+				{
+					$position = array();
+				}
+
+
+				if (isset($value->image)) {
+
+					$imagemodel = FilesModel::findByPk($value->image);
+					$objFile = new File($imagemodel->path);
+
+					$points[$key] = array(
+						"title" => $value->title,
+						"image" => $imagemodel->path,
+						"size" => $objFile->imageSize,
+						"latitude"  => $position[0],
+						"longitude"  => $position[1],
+						"zoom"  => $position[2],
+						"description" =>  $value->description,
+						"info" => boolval($value->info)
+					);
+
+				}else{
+
+					$points[$key] = array(
+						"title" => $value->title,
+						"image" => NULL,
+						"size" => NULL,
+						"latitude"  => $position[0],
+						"longitude"  => $position[1],
+						"zoom"  => $position[2],
+						"description" =>  $value->description,
+						"info" => boolval($value->info)
+					);
+				}
+
+				
 			}
-			catch (Exception $e)
-			{
-				$position = array();
-			}
 
-
-			if (isset($value->image)) {
-
-				$imagemodel = FilesModel::findByPk($value->image);
-				$objFile = new File($imagemodel->path);
-
-				$points[$key] = array(
-					"title" => $value->title,
-					"image" => $imagemodel->path,
-					"size" => $objFile->imageSize,
-					"latitude"  => $position[0],
-					"longitude"  => $position[1],
-					"zoom"  => $position[2],
-					"description" =>  $value->description,
-					"info" => boolval($value->info)
-				);
-
-			}else{
-
-				$points[$key] = array(
-					"title" => $value->title,
-					"image" => NULL,
-					"size" => NULL,
-					"latitude"  => $position[0],
-					"longitude"  => $position[1],
-					"zoom"  => $position[2],
-					"description" =>  $value->description,
-					"info" => boolval($value->info)
-				);
-			}
-
-			
 		}
 		
 	$this->Template->Points = $points;
