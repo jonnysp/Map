@@ -31,8 +31,9 @@ $GLOBALS['TL_DCA']['tl_map_points'] = array
 	(
 		'sorting' => array
 		(
-			'mode'                    => DataContainer::MODE_SORTED,
+			'mode'                    => DataContainer::MODE_PARENT,
 			'fields'                  => array('title'),
+			'headerFields'            => array('title', 'tstamp'),
 			'flag'                    => DataContainer::SORT_INITIAL_LETTER_ASC,
 			'panelLayout'             => 'filter;search,limit',
 			'defaultSearchField'      => 'title'
@@ -113,7 +114,7 @@ $GLOBALS['TL_DCA']['tl_map_points'] = array
 			'toggle'                  => true,
 			'filter'                  => true,
 			'inputType'               => 'checkbox',
-			'eval'                    => array('submitOnChange'=>true, 'doNotCopy'=>true, 'tl_class'=>'w50'),
+			'eval'                    => array('submitOnChange'=>true, 'doNotCopy'=>true, 'tl_class'=>'w50 m12'),
 			'sql'                     => array('type' => 'boolean', 'default' => false)
 		)
 	)
