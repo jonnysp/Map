@@ -1,15 +1,13 @@
 <?php
 
-
 use Contao\System;
 use Contao\Backend;
 use Contao\Model;
-use App\Model\MapModel;
-use App\Model\MapPointsModel;
+use Map\Model\MapModel;
+use Map\Model\MapPointsModel;
 use Contao\DataContainer;
 use Contao\StringUtil;
 use Contao\Image;
-
 
 $GLOBALS['TL_DCA']['tl_content']['palettes']['map_viewer'] = '{type_legend},type;{map_legend},map;{protected_legend:hide};{expert_legend:hide},cssID,space;{invisible_legend:hide},invisible,start,stop';
 $GLOBALS['TL_DCA']['tl_content']['fields']['map'] = array
@@ -27,7 +25,7 @@ class tl_content_map extends Backend
 
 	public function getMap()
 	{
-		$objMaps =  MapModel::findAll();
+		$objMaps = MapModel::findAll();
 		$arrMaps = array();
 		foreach ($objMaps as $objMap)
 		{

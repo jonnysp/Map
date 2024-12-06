@@ -8,8 +8,8 @@ use Contao\FilesModel;
 use Contao\File;
 use Symfony\Component\HttpFoundation\Request;
 
-use App\Model\MapModel;
-use App\Model\MapPointsModel;
+use Map\Model\MapModel;
+use Map\Model\MapPointsModel;
 
 class MapViewer extends ContentElement
 {

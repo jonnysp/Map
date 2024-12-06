@@ -1,5 +1,5 @@
 <?php
-namespace App\Model;
+namespace Map\Model;
 
 use Contao\Model;
 

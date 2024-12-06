@@ -9,8 +9,8 @@
  */
 
 
-use App\Model\MapModel;
-use App\Model\MapPointsModel;
+use Map\Model\MapModel;
+use Map\Model\MapPointsModel;
 
 $GLOBALS['TL_MODELS']['tl_map'] = MapModel::class;
 $GLOBALS['TL_MODELS']['tl_map_points'] = MapPointsModel::class;
