@@ -19,13 +19,14 @@ class MapViewer extends ContentElement
 
 		if ($request && System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest($request))
 		{
+			$objMap = MapModel::findByPK($this->map);
 			$objTemplate = new BackendTemplate('be_wildcard');
 			$objTemplate->wildcard = '### ' . $GLOBALS['TL_LANG']['tl_content']['map_legend'] . ' ###';
 
-			if (null !== $objMap = MapModel::findByPK($this->map))
+			if (null !== $objMap)
 			{
 				$objTemplate->title = '['. $objMap->id.'] - '. $objMap->title;
-			}
+			}	
 
 			return $objTemplate->parse();
 		}
