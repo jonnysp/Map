@@ -2,6 +2,7 @@
 
 use Contao\ContentElement;
 use Contao\BackendTemplate;
+use Contao\StringUtil;
 use Contao\System;
 use Contao\FilesModel;
 use Contao\File;
@@ -18,10 +19,13 @@ class MapViewer extends ContentElement
 
 		if ($request && System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest($request))
 		{
-			$objMap = MapModel::findByPK($this->map);
 			$objTemplate = new BackendTemplate('be_wildcard');
 			$objTemplate->wildcard = '### ' . $GLOBALS['TL_LANG']['tl_content']['map_legend'] . ' ###';
-			$objTemplate->title = '['. $objMap->id.'] - '. $objMap->title;
+
+			if (null !== $objMap = MapModel::findByPK($this->map))
+			{
+				$objTemplate->title = '['. $objMap->id.'] - '. $objMap->title;
+			}
 
 			return $objTemplate->parse();
 		}
@@ -31,23 +35,23 @@ class MapViewer extends ContentElement
 
 	protected function compile(): void
 	{
+		$points = array();
+
 		$GLOBALS['TL_JAVASCRIPT'][] = 'bundles/jonnyspmap/leaflet.js';
 		$GLOBALS['TL_CSS'][] = 		  'bundles/jonnyspmap/leaflet.css';
 
 		$this->loadLanguageFile('tl_map');
 		$this->loadLanguageFile('tl_map_points');
 
-		//gets the categorie
-		$objMap = MapModel::findByPK($this->map);
+		// Get the category and return early when no map was found
+		if (null === ($objMap = MapModel::findByPK($this->map)))
+		{
+			$this->Template->Points = $points;
 
-		try
-		{
-			$mapPosition = unserialize($objMap->position);
+			return;
 		}
-		catch (Exception $e)
-		{
-			$mapPosition = array();
-		}
+
+		$mapPosition = StringUtil::deserialize($objMap->position, true);
 
 		$lat = isset($mapPosition[0]) && '' !== $mapPosition[0] ? $mapPosition[0] : 0;
 		$lng = isset($mapPosition[1]) && '' !== $mapPosition[1] ? $mapPosition[1] : 0;
@@ -73,8 +77,6 @@ class MapViewer extends ContentElement
 
 		$filter = array('column' => array('pid=?','published=?'),'value' => array($objMap->id,1));
 		$objPoints = MapPointsModel::findAll($filter);
-
-		$points = array();
 
 		if (null !== $objPoints)
 		{
