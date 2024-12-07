@@ -1,6 +1,6 @@
 <?php
+
 use Contao\Widget;
-use Contao\StringUtil;
 
 class PositionSelectorField extends Widget
 {
@@ -8,13 +8,16 @@ class PositionSelectorField extends Widget
 	protected $strTemplate = 'be_widget';
 	protected $blnSubmitInput = true;
 
-	public function generate()
+	public function generate(): string
 	{
-
 		$GLOBALS['TL_JAVASCRIPT'][] = 'bundles/jonnyspmap/leaflet.js';
 		$GLOBALS['TL_CSS'][] = 		  'bundles/jonnyspmap/leaflet.css';
 
 		$olmapname = 'olmap'.$this->__get('currentRecord');
+
+		$lat = isset($this->varValue[0]) && '' !== $this->varValue[0] ? $this->varValue[0] : 0;
+		$lng = isset($this->varValue[1]) && '' !== $this->varValue[1] ? $this->varValue[1] : 0;
+		$zoom = isset($this->varValue[2]) && '' !== $this->varValue[2] ? $this->varValue[2] : 5;
 
 		echo  '<div class="tl_text" id="'.$olmapname .'_canvas" style="width:auto; height:300px;"></div>
 
@@ -24,8 +27,8 @@ class PositionSelectorField extends Widget
 					var '.$olmapname.'min_zoom = 1;
 					var '.$olmapname.'max_zoom = 19;
 					var '.$olmapname.'marker = {};
-					var '.$olmapname.'markerpos = ['.($this->varValue[0] ?: 0).' ,'.($this->varValue[1] ?: 0).'];
-					var '.$olmapname.'markerzoom = '.($this->varValue[2] ?: 5).';
+					var '.$olmapname.'markerpos = ['.$lat.' ,'.$lng.'];
+					var '.$olmapname.'markerzoom = '.$zoom.';
 
 					var markerIcon = L.icon({
 					    iconUrl: "bundles/jonnyspmap/images/marker-icon.png",
