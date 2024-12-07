@@ -21,8 +21,10 @@ class MapViewer extends ContentElement
 			$objMap = MapModel::findByPK($this->map);
 			$objTemplate = new BackendTemplate('be_wildcard');
 			$objTemplate->wildcard = '### ' . $GLOBALS['TL_LANG']['tl_content']['map_legend'] . ' ###';
-			$objTemplate->title = '['. $objMap->id.'] - '. $objMap->title;
-
+			if (null !== $objMap)
+			{
+				$objTemplate->title = '['. $objMap->id.'] - '. $objMap->title;
+			}	
 			return $objTemplate->parse();
 		}
 
