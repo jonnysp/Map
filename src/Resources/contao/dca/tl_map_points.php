@@ -33,7 +33,7 @@ $GLOBALS['TL_DCA']['tl_map_points'] = array
 		(
 			'mode'                    => DataContainer::MODE_PARENT,
 			'fields'                  => array('title'),
-			'headerFields'            => array('title', 'tstamp'),
+			'headerFields'            => array('title'),
 			'flag'                    => DataContainer::SORT_INITIAL_LETTER_ASC,
 			'panelLayout'             => 'filter;search,limit',
 			'defaultSearchField'      => 'title'
