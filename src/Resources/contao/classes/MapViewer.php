@@ -42,12 +42,16 @@ class MapViewer extends ContentElement
 
 		try
 		{
-			$mapposition = unserialize($objMap->position);
+			$mapPosition = unserialize($objMap->position);
 		}
 		catch (Exception $e)
 		{
-			$mapposition = array();
+			$mapPosition = array();
 		}
+
+		$lat = isset($mapPosition[0]) && '' !== $mapPosition[0] ? $mapPosition[0] : 0;
+		$lng = isset($mapPosition[1]) && '' !== $mapPosition[1] ? $mapPosition[1] : 0;
+		$zoom = isset($mapPosition[2]) && '' !== $mapPosition[2] ? $mapPosition[2] : 5;
 
 		$Map = array(
 			"id" => $objMap->id,
@@ -56,9 +60,9 @@ class MapViewer extends ContentElement
 			"title" => $objMap->title,
 			"description" => $objMap->description,
 			"height" => $objMap->height,
-			"latitude" => $mapposition[0],
-			"longitude"  => $mapposition[1],
-			"zoom"  => $mapposition[2],
+			"latitude" => $lat,
+			"longitude" => $lng,
+			"zoom" => $zoom,
 			"autozoom" => boolval($objMap->autozoom),
 			"mousescroll" => boolval($objMap->mousescroll),
 			"minzoom" => $objMap->minzoom,
