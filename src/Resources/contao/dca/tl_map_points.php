@@ -105,7 +105,7 @@ $GLOBALS['TL_DCA']['tl_map_points'] = array
 			'label'                   => &$GLOBALS['TL_LANG']['tl_map_points']['position'],
 			'inputType'           	  => 'positionselectorfield',
 			'eval'                    => array('rgxp'=>'digit', 'tl_class'=>'clr', 'nospace'=>false),
-			'sql'					  =>"varchar(128) NOT NULL default 'a:3:{i:0;s:1:\"0\";i:1;s:1:\"0\";i:2;s:1:\"1\";}'"
+			'sql'					  => "varchar(128) NOT NULL default 'a:3:{i:0;s:1:\"0\";i:1;s:1:\"0\";i:2;s:1:\"1\";}'"
 		),
 		'published' => array
 		(
