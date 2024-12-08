@@ -1,7 +1,7 @@
 {
     "name": "jonnysp/map",
     "type": "contao-bundle",
-    "description": "Adds a Googlemap to Contao 4",
+    "description": "Adds a Googlemap to Contao 5",
     "keywords":["map","contao"],
     "license": "LGPL-3.0+",
     "authors": [
@@ -11,11 +11,11 @@
         }
     ],
     "require": {
-        "php":">=5.6.0",
-        "contao/core-bundle":"^4.4"
+        "php":">=8.1.0",
+        "contao/core-bundle":"^5.3"
     },
     "conflict": {
-         "contao/core-bundle": "<4.4.1"
+         "contao/core-bundle": "<5.3"
     },
     "autoload": {
         "psr-4": {
@@ -40,5 +40,6 @@
     "support": {
         "issues": "https://github.com/jonnysp/Map/issues",
         "source": "https://github.com/jonnysp/Map"
-    }
+    },
+    "version": "1.0.0"
 }

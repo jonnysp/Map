@@ -1,43 +1,62 @@
 <?php
 
+use Contao\ContentElement;
+use Contao\BackendTemplate;
+use Contao\StringUtil;
+use Contao\System;
+use Contao\FilesModel;
+use Contao\File;
+use Map\Model\MapModel;
+use Map\Model\MapPointsModel;
+
 class MapViewer extends ContentElement
 {
 	protected $strTemplate = 'ce_mapviewer';
 
-	public function generate()
+	public function generate(): string
 	{
-		if (TL_MODE == 'BE')
-		{
-			$objMap = \MapModel::findByPK($this->map);
-			$objTemplate = new \BackendTemplate('be_wildcard');
-			$objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['tl_content']['map_legend']) . ' ###';
-			$objTemplate->title = '['. $objMap->id.'] - '. $objMap->title;
-			return $objTemplate->parse();	
-		}
-		return parent::generate();
-	}//end generate
+		$request = System::getContainer()->get('request_stack')->getCurrentRequest();
 
-	protected function compile()
+		if ($request && System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest($request))
+		{
+			$objMap = MapModel::findByPK($this->map);
+			$objTemplate = new BackendTemplate('be_wildcard');
+			$objTemplate->wildcard = '### ' . $GLOBALS['TL_LANG']['tl_content']['map_legend'] . ' ###';
+
+			if (null !== $objMap)
+			{
+				$objTemplate->title = '['. $objMap->id.'] - '. $objMap->title;
+			}	
+
+			return $objTemplate->parse();
+		}
+
+		return parent::generate();
+	}
+
+	protected function compile(): void
 	{
+		$points = array();
 
 		$GLOBALS['TL_JAVASCRIPT'][] = 'bundles/jonnyspmap/leaflet.js';
 		$GLOBALS['TL_CSS'][] = 		  'bundles/jonnyspmap/leaflet.css';
 
-		global $objPage;
 		$this->loadLanguageFile('tl_map');
 		$this->loadLanguageFile('tl_map_points');
 
-		//gets the categorie
-		$objMap = \MapModel::findByPK($this->map);
+		// Get the category and return early when no map was found
+		if (null === ($objMap = MapModel::findByPK($this->map)))
+		{
+			$this->Template->Points = $points;
 
-		try
-		{
-			$mapposition = unserialize($objMap->position);
+			return;
 		}
-		catch (Exception $e)
-		{
-			$mapposition = array();
-		}
+
+		$mapPosition = StringUtil::deserialize($objMap->position, true);
+
+		$lat = isset($mapPosition[0]) && '' !== $mapPosition[0] ? $mapPosition[0] : 0;
+		$lng = isset($mapPosition[1]) && '' !== $mapPosition[1] ? $mapPosition[1] : 0;
+		$zoom = isset($mapPosition[2]) && '' !== $mapPosition[2] ? $mapPosition[2] : 5;
 
 		$Map = array(
 			"id" => $objMap->id,
@@ -46,9 +65,9 @@ class MapViewer extends ContentElement
 			"title" => $objMap->title,
 			"description" => $objMap->description,
 			"height" => $objMap->height,
-			"latitude" => $mapposition[0],
-			"longitude"  => $mapposition[1],
-			"zoom"  => $mapposition[2],
+			"latitude" => $lat,
+			"longitude" => $lng,
+			"zoom" => $zoom,
 			"autozoom" => boolval($objMap->autozoom),
 			"mousescroll" => boolval($objMap->mousescroll),
 			"minzoom" => $objMap->minzoom,
@@ -58,58 +77,54 @@ class MapViewer extends ContentElement
 		$this->Template->Map = $Map;
 
 		$filter = array('column' => array('pid=?','published=?'),'value' => array($objMap->id,1));
-		$objPoints = \MapPointsModel::findAll($filter);
+		$objPoints = MapPointsModel::findAll($filter);
 
-		$points = array();	
-
-
-		foreach ($objPoints as $key => $value) {
-
-			try
+		if (null !== $objPoints)
+		{
+			foreach ($objPoints as $key => $value)
 			{
-				$position = unserialize($value->position);
+				try
+				{
+					$position = unserialize($value->position);
+				}
+				catch (Exception $e)
+				{
+					$position = array();
+				}
+
+
+				if (isset($value->image)) {
+
+					$imagemodel = FilesModel::findByPk($value->image);
+					$objFile = new File($imagemodel->path);
+
+					$points[$key] = array(
+						"title" => $value->title,
+						"image" => $imagemodel->path,
+						"size" => $objFile->imageSize,
+						"latitude"  => $position[0],
+						"longitude"  => $position[1],
+						"zoom"  => $position[2],
+						"description" =>  $value->description,
+						"info" => boolval($value->info)
+					);
+
+				}else{
+
+					$points[$key] = array(
+						"title" => $value->title,
+						"image" => NULL,
+						"size" => NULL,
+						"latitude"  => $position[0],
+						"longitude"  => $position[1],
+						"zoom"  => $position[2],
+						"description" =>  $value->description,
+						"info" => boolval($value->info)
+					);
+				}
 			}
-			catch (Exception $e)
-			{
-				$position = array();
-			}
-
-
-			if (isset($value->image)) {
-			   
-				$imagemodel = \FilesModel::findByPk($value->image);
-				$objFile = new File($imagemodel->path);
-
-				$points[$key] = array(
-					"title" => $value->title,
-					"image" => $imagemodel->path,
-					"size" => $objFile->imageSize,
-					"latitude"  => $position[0],
-					"longitude"  => $position[1],
-					"zoom"  => $position[2],
-					"description" =>  $value->description,
-					"info" => boolval($value->info)
-				);
-
-			}else{
-
-				$points[$key] = array(
-					"title" => $value->title,
-					"image" => NULL,
-					"size" => NULL,
-					"latitude"  => $position[0],
-					"longitude"  => $position[1],
-					"zoom"  => $position[2],
-					"description" =>  $value->description,
-					"info" => boolval($value->info)
-				);
-			}
-
-			
 		}
-		
+
 		$this->Template->Points = $points;
-
-	}//end compile
-
-}//end class
+	}
+}

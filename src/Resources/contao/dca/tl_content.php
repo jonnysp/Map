@@ -1,6 +1,13 @@
 <?php
 
-$GLOBALS['TL_DCA']['tl_content']['palettes']['map_viewer'] = '{type_legend},type;{map_legend},map;{protected_legend:hide},protected;{expert_legend:hide},cssID,space;{invisible_legend:hide},invisible,start,stop';
+use Contao\System;
+use Contao\Backend;
+use Map\Model\MapModel;
+use Contao\DataContainer;
+use Contao\StringUtil;
+use Contao\Image;
+
+$GLOBALS['TL_DCA']['tl_content']['palettes']['map_viewer'] = '{type_legend},type;{map_legend},map;{protected_legend:hide};{expert_legend:hide},cssID,space;{invisible_legend:hide},invisible,start,stop';
 $GLOBALS['TL_DCA']['tl_content']['fields']['map'] = array
 (
 	'label'                   => &$GLOBALS['TL_LANG']['tl_content']['map'],
@@ -11,25 +18,30 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['map'] = array
 	'sql'                     => "int(10) unsigned NOT NULL default '0'"
 );
 
-
-class tl_content_map extends Backend 
+class tl_content_map extends Backend
 {
-
-	public function getMap()
+	public function getMap(): array
 	{
-		$objCats =  \MapModel::findAll();
-		$arrCats = array();
-		foreach ($objCats as $objCat)
+		$arrMaps = array();
+
+		if ($objMaps = MapModel::findAll())
 		{
-			$arrCats[$objCat->id] = '[ID ' . $objCat->id . '] - '. $objCat->title;
+			foreach ($objMaps as $objMap)
+			{
+				$arrMaps[$objMap->id] = '[ID ' . $objMap->id . '] - '. $objMap->title;
+			}
 		}
-		return $arrCats;
+
+		return $arrMaps;
 	}
 
-	public function editMap(DataContainer $dc)
+	public function editMap(DataContainer $dc): string
 	{
 		$this->loadLanguageFile('tl_map');
-		return ($dc->value < 1) ? '' : ' <a href="contao/main.php?do=map&amp;act=edit&amp;id=' . $dc->value . '&amp;popup=1&amp;nb=1&amp;rt=' . REQUEST_TOKEN . '" title="' . sprintf(StringUtil::specialchars($GLOBALS['TL_LANG']['tl_map']['editheader'][1]), $dc->value) . '" onclick="Backend.openModalIframe({\'title\':\'' . StringUtil::specialchars(str_replace("'", "\\'", sprintf($GLOBALS['TL_LANG']['tl_map']['editheader'][1], $dc->value))) . '\',\'url\':this.href});return false">' . Image::getHtml('alias.svg', $GLOBALS['TL_LANG']['tl_map']['editheader'][0]) . '</a>';
-	}
 
+		$title = sprintf($GLOBALS['TL_LANG']['tl_map']['editheader'][1], $dc->value);
+		$href = System::getContainer()->get('router')->generate('contao_backend', array('do'=>'map', 'table'=>'tl_map','act'=>'edit', 'id'=>$dc->value , 'popup'=>'1', 'nb'=>'1'));
+
+		return ' <a href="' . StringUtil::specialcharsUrl($href) . '" title="' . StringUtil::specialchars($title) . '" onclick="Backend.openModalIframe({\'title\':\'' . StringUtil::specialchars(str_replace("'", "\\'", $title)) . '\',\'url\':this.href});return false">' . Image::getHtml('alias.svg', $title) . '</a>';
+	}
 }
