@@ -1,7 +1,7 @@
 {
     "name": "jonnysp/map",
     "type": "contao-bundle",
-    "description": "Adds a Googlemap to Contao 5",
+    "description": "Adds a Tilemap to Contao 5",
     "keywords":["map","contao"],
     "license": "LGPL-3.0+",
     "authors": [
