@@ -20,7 +20,7 @@ $GLOBALS['TL_MODELS']['tl_map_points'] = MapPointsModel::class;
 
 ArrayUtil::arrayInsert($GLOBALS['BE_MOD']['map'], 100, array
 (
-	'map' 		=> array('tables' => array('tl_map', 'tl_map_points'))
+	'map' => array('tables' => array('tl_map', 'tl_map_points'))
 ));
 
 
@@ -33,7 +33,7 @@ if (System::getContainer()->get('contao.routing.scope_matcher')
 {
 	$GLOBALS['TL_CSS'][] = 'bundles/jonnyspmap/map.css|static';
 	$GLOBALS['BE_FFL']['positionselectorfield'] = 'PositionSelectorField';
-}
+};
 
 /**
  * Front end modules
