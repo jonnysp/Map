@@ -13,7 +13,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['map'] = array
 	'label'                   => &$GLOBALS['TL_LANG']['tl_content']['map'],
 	'inputType'               => 'select',
 	'options_callback'        => array('tl_content_map', 'getMap'),
-	'eval'                    => array('includeBlankOption' => true,'mandatory'=>true, 'chosen'=>true, 'submitOnChange'=>true),
+	'eval'                    => array('mandatory'=>true, 'chosen'=>true, 'submitOnChange'=>true),
 	'wizard' 				  => array(array('tl_content_map', 'editMap')),
 	'sql'                     => "int(10) unsigned NOT NULL default '0'"
 );
