@@ -114,8 +114,7 @@ $GLOBALS['TL_DCA']['tl_map_points'] = array
 			'filter'                  => true,
 			'inputType'               => 'checkbox',
 			'eval'                    => array('submitOnChange'=>true, 'doNotCopy'=>true, 'tl_class'=>'w50 m12'),
-			'sql'                     => array('type' => 'boolean', 'default' => false),
-			'save_callback'			  => array()
+			'sql'                     => array('type' => 'boolean', 'default' => false)
 		)
 	)
 );
