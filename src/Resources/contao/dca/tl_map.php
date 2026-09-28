@@ -57,7 +57,7 @@ $GLOBALS['TL_DCA']['tl_map'] = array
 		),
 		'tstamp' => array
 		(
-			'sql'                      => ['type' => 'integer','notnull' => false, 'unsigned' => true,'default' => '0','fixed' => true]
+			'sql'                     => "int(10) unsigned NOT NULL default '0'"
 		),
 		'title' => array
 		(
@@ -110,7 +110,7 @@ $GLOBALS['TL_DCA']['tl_map'] = array
 			'inputType'               => 'checkbox',
 			'isBoolean'				  => true,
 			'eval'                    => array( 'tl_class'=>'w100 clr'),
-			'sql'                     => array('type' => 'boolean', 'default' => false)
+			'sql'                     => "char(1) NOT NULL default ''"
 		),
 		'mousescroll' => array
 		(
@@ -118,7 +118,7 @@ $GLOBALS['TL_DCA']['tl_map'] = array
 			'inputType'               => 'checkbox',
 			'isBoolean'				  => true,
 			'eval'                    => array( 'tl_class'=>'w100 clr'),
-			'sql'                     => array('type' => 'boolean', 'default' => 1)
+			'sql'                     => "char(1) NOT NULL default '1'"
 		),
 		'minzoom' => array
 		(
