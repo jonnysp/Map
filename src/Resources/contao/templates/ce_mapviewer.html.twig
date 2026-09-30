@@ -37,7 +37,9 @@
       map_{{id}}.flyTo(e.latlng,e.target.options.zoom);
     };    
 
-    $(function(){
+
+    document.addEventListener('DOMContentLoaded', function () {
+        
         map_{{id}} = L.map('cmap_{{id}}').setView(default_pos_{{id}}, default_zoom_{{id}});
     
        {% if not Map.mousescroll  %}
@@ -53,7 +55,7 @@
         
 	    //map_{{id}}.attributionControl.setPrefix('{{ Map.copyright }}');
 
-	    $(points_{{id}}).each(function(index, value) {
+	    points_{{id}}.forEach(function(value, index) {
 
             if (value.image){
 
