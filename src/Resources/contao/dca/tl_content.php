@@ -38,10 +38,14 @@ class tl_content_map extends Backend
 	public function editMap(DataContainer $dc): string
 	{
 		$this->loadLanguageFile('tl_map');
-
+		if ($dc->value < 1)
+        {
+            return '';
+        }
 		$title = sprintf($GLOBALS['TL_LANG']['tl_map']['editheader'][1], $dc->value);
 		$href = System::getContainer()->get('router')->generate('contao_backend', array('do'=>'map', 'table'=>'tl_map','act'=>'edit', 'id'=>$dc->value , 'popup'=>'1', 'nb'=>'1'));
 
-		return ' <a href="' . StringUtil::specialcharsUrl($href) . '" title="' . StringUtil::specialchars($title) . '" onclick="Backend.openModalIframe({\'title\':\'' . StringUtil::specialchars(str_replace("'", "\\'", $title)) . '\',\'url\':this.href});return false">' . Image::getHtml('alias.svg', $title) . '</a>';
+		return ' <a href="' . StringUtil::specialcharsUrl($href) . '" onclick="Backend.openModalIframe({\'title\':\'' . StringUtil::specialchars(str_replace("'", "\\'", $title)) . '\',\'url\':this.href});return false">' . Image::getHtml('edit.svg', $title) . '</a>';
+
 	}
 }
