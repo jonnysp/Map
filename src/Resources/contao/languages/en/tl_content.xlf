@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file datatype="plaintext" original="src/Resources/contao/languages/en/tl_content.xlf" source-language="en" target-language="en">
+    <body>
+      <!-- Fields -->
+      <trans-unit id="tl_content.map.0">
+        <source>Map</source>
+        <target>Map</target>
+      </trans-unit>
+      <trans-unit id="tl_content.map.1">
+        <source>Please select a map from the list.</source>
+        <target>Please select a map from the list!</target>
+      </trans-unit>
+
+      <!-- Legends -->
+      <trans-unit id="tl_content.map_legend">
+        <source>Map settings</source>
+        <target>Map</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

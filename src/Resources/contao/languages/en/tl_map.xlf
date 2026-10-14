@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file datatype="plaintext" original="src/Resources/contao/languages/en/tl_map.xlf" source-language="en" target-language="en">
+    <body>
+      <!-- Fields -->
+      <trans-unit id="tl_map.titleURL.0">
+        <source>Title URL</source>
+        <target>Tile URL</target>
+      </trans-unit>
+      <trans-unit id="tl_map.titleURL.1">
+        <source>https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png</source>
+        <target>https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png</target>
+      </trans-unit>
+
+      <trans-unit id="tl_map.copyright.0">
+        <source>Copyright</source>
+        <target>Copyright</target>
+      </trans-unit>
+      <trans-unit id="tl_map.copyright.1">
+        <source>Copyright Information.</source>
+        <target>Copyright Information.</target>
+      </trans-unit>
+
+      <trans-unit id="tl_map.title.0">
+        <source>Map Name</source>
+        <target>Map Name</target>
+      </trans-unit>
+      <trans-unit id="tl_map.title.1">
+        <source>Please enter the map name.</source>
+        <target>Please enter the map name here.</target>
+      </trans-unit>
+
+      <trans-unit id="tl_map.description.0">
+        <source>Map Description</source>
+        <target>Map Description</target>
+      </trans-unit>
+      <trans-unit id="tl_map.description.1">
+        <source>Map description.</source>
+        <target>Please enter a short description for this map.</target>
+      </trans-unit>
+
+      <trans-unit id="tl_map.height.0">
+        <source>Map Height</source>
+        <target>Map Height</target>
+      </trans-unit>
+      <trans-unit id="tl_map.height.1">
+        <source>Height</source>
+        <target>Define the container viewport height rendering parameters.</target>
+      </trans-unit>
+
+      <trans-unit id="tl_map.position.0">
+        <source>Position</source>
+        <target>Default Center Position</target>
+      </trans-unit>
+      <trans-unit id="tl_map.position.1">
+        <source>Map position.</source>
+        <target>Define default layout coordinates center positioning targets.</target>
+      </trans-unit>
+
+      <trans-unit id="tl_map.autozoom.0">
+        <source>Autozoom</source>
+        <target>Autozoom</target>
+      </trans-unit>
+      <trans-unit id="tl_map.autozoom.1">
+        <source>Zoom to map point.</source>
+        <target>Automatically refocus dynamic scales bounding boxes parameters over marker nodes.</target>
+      </trans-unit>
+
+      <trans-unit id="tl_map.minzoom.0">
+        <source>Minzoom</source>
+        <target>Minimum Zoom Level</target>
+      </trans-unit>
+      <trans-unit id="tl_map.minzoom.1">
+        <source>Minimum zoom level.</source>
+        <target>Define lowest possible magnification scale threshold limits attributes.</target>
+      </trans-unit>
+
+      <trans-unit id="tl_map.maxzoom.0">
+        <source>Maxzoom</source>
+        <target>Maximum Zoom Level</target>
+      </trans-unit>
+      <trans-unit id="tl_map.maxzoom.1">
+        <source>Maximum zoom level.</source>
+        <target>Define highest possible magnification scale threshold limits attributes.</target>
+      </trans-unit>
+
+      <trans-unit id="tl_map.mousescroll.0">
+        <source>Zoom with mouse</source>
+        <target>Mouse Scroll Wheel Zoom</target>
+      </trans-unit>
+      <trans-unit id="tl_map.mousescroll.1">
+        <source>Zoom with mouse wheel.</source>
+        <target>Allow zooming interactions via hardware desktop mouse scroll wheels actions.</target>
+      </trans-unit>
+
+      <!-- Legends -->
+      <trans-unit id="tl_map.title_legend">
+        <source>Global settings</source>
+        <target>Map Base Configuration</target>
+      </trans-unit>
+      <trans-unit id="tl_map.description_legend">
+        <source>Description</source>
+        <target>Map Description Layouts Settings</target>
+      </trans-unit>
+      <trans-unit id="tl_map.zoom_legend">
+        <source>Zoom Settings</source>
+        <target>Zoom Bounds Variables Parameters</target>
+      </trans-unit>
+      <trans-unit id="tl_map.position_legend">
+        <source>Position</source>
+        <target>Geographical Alignments</target>
+      </trans-unit>
+
+      <!-- Buttons -->
+      <trans-unit id="tl_map.new.0">
+        <source>New Map</source>
+        <target>New Map</target>
+      </trans-unit>
+      <trans-unit id="tl_map.new.1">
+        <source>Create a new map</source>
+        <target>Create a completely new map dataset record row</target>
+      </trans-unit>
+
+      <trans-unit id="tl_map.show.0">
+        <source>Map details</source>
+        <target>Map details</target>
+      </trans-unit>
+      <trans-unit id="tl_map.show.1">
+        <source>Show details of map ID %s</source>
+        <target>Show configuration properties logs profiles dump for map ID %s</target>
+      </trans-unit>
+
+      <trans-unit id="tl_map.edit.0">
+        <source>Edit map points</source>
+        <target>Manage Marker Locations</target>
+      </trans-unit>
+      <trans-unit id="tl_map.edit.1">
+        <source>Edit map points of map ID %s</source>
+        <target>Redirect views panels interfaces onto nested markers subrecords lists for map ID %s</target>
+      </trans-unit>
+
+      <trans-unit id="tl_map.editheader.0">
+        <source>Edit map</source>
+        <target>Edit map settings</target>
+      </trans-unit>
+      <trans-unit id="tl_map.editheader.1">
+        <source>Edit configuration of map ID %s</source>
+        <target>Modify base settings for map configuration row index key ID %s</target>
+      </trans-unit>
+
+      <trans-unit id="tl_map.copy.0">
+        <source>Copy map</source>
+        <target>Duplicate map setup</target>
+      </trans-unit>
+      <trans-unit id="tl_map.copy.1">
+        <source>Copy map ID %s</source>
+        <target>Clone entire structural parameters configuration layers descriptors matching map ID %s</target>
+      </trans-unit>
+
+      <trans-unit id="tl_map.delete.0">
+        <source>Delete map</source>
+        <target>Delete map structure</target>
+      </trans-unit>
+      <trans-unit id="tl_map.delete.1">
+        <source>Delete map ID %s</source>
+        <target>Wipe out and permanently drop target map entry data database row index key matching ID %s</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file datatype="plaintext" original="src/Resources/contao/languages/de/tl_map.xlf" source-language="en" target-language="de">
+    <body>
+      <!-- Fields -->
+      <trans-unit id="tl_map.titleURL.0">
+        <source>Title URL</source>
+        <target>Title URL</target>
+      </trans-unit>
+      <trans-unit id="tl_map.titleURL.1">
+        <source>https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png</source>
+        <target>https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png</target>
+      </trans-unit>
+
+      <trans-unit id="tl_map.copyright.0">
+        <source>Copyright</source>
+        <target>Copyright</target>
+      </trans-unit>
+      <trans-unit id="tl_map.copyright.1">
+        <source>Copyright Information.</source>
+        <target>Copyright Information.</target>
+      </trans-unit>
+
+      <trans-unit id="tl_map.title.0">
+        <source>Map Name</source>
+        <target>Map Name</target>
+      </trans-unit>
+      <trans-unit id="tl_map.title.1">
+        <source>Please enter the map name.</source>
+        <target>Geben Sie hier den Mapnamen ein.</target>
+      </trans-unit>
+
+      <trans-unit id="tl_map.description.0">
+        <source>Map Description</source>
+        <target>Map Beschreibung</target>
+      </trans-unit>
+      <trans-unit id="tl_map.description.1">
+        <source>Map description.</source>
+        <target>Mapbeschreibung.</target>
+      </trans-unit>
+
+      <trans-unit id="tl_map.height.0">
+        <source>Map Height</source>
+        <target>Map Höhe</target>
+      </trans-unit>
+      <trans-unit id="tl_map.height.1">
+        <source>Height</source>
+        <target>Höhe</target>
+      </trans-unit>
+
+      <trans-unit id="tl_map.position.0">
+        <source>Position</source>
+        <target>Position</target>
+      </trans-unit>
+      <trans-unit id="tl_map.position.1">
+        <source>Map position.</source>
+        <target>Map Position.</target>
+      </trans-unit>
+
+      <trans-unit id="tl_map.autozoom.0">
+        <source>Autozoom</source>
+        <target>Autozoom</target>
+      </trans-unit>
+      <trans-unit id="tl_map.autozoom.1">
+        <source>Zoom to map point.</source>
+        <target>Auf Map-Point Zoomen.</target>
+      </trans-unit>
+
+      <trans-unit id="tl_map.minzoom.0">
+        <source>Minzoom</source>
+        <target>Minzoom</target>
+      </trans-unit>
+      <trans-unit id="tl_map.minzoom.1">
+        <source>Minimum zoom level.</source>
+        <target>minimale Zoomstufe.</target>
+      </trans-unit>
+
+      <trans-unit id="tl_map.maxzoom.0">
+        <source>Maxzoom</source>
+        <target>Maxzoom</target>
+      </trans-unit>
+      <trans-unit id="tl_map.maxzoom.1">
+        <source>Maximum zoom level.</source>
+        <target>maximale Zoomstufe.</target>
+      </trans-unit>
+
+      <trans-unit id="tl_map.mousescroll.0">
+        <source>Zoom with mouse</source>
+        <target>Mit Maus Zoomen</target>
+      </trans-unit>
+      <trans-unit id="tl_map.mousescroll.1">
+        <source>Zoom with mouse wheel.</source>
+        <target>mit Mausrad zoomen.</target>
+      </trans-unit>
+
+      <!-- Legends -->
+      <trans-unit id="tl_map.title_legend">
+        <source>Global settings</source>
+        <target>Map Grundeinstellungen</target>
+      </trans-unit>
+      <trans-unit id="tl_map.description_legend">
+        <source>Description</source>
+        <target>Map Beschreibung</target>
+      </trans-unit>
+      <trans-unit id="tl_map.zoom_legend">
+        <source>Zoom Settings</source>
+        <target>Zoom Settings</target>
+      </trans-unit>
+      <trans-unit id="tl_map.position_legend">
+        <source>Position</source>
+        <target>Position</target>
+      </trans-unit>
+
+      <!-- Buttons -->
+      <trans-unit id="tl_map.new.0">
+        <source>New Map</source>
+        <target>Neue Map</target>
+      </trans-unit>
+      <trans-unit id="tl_map.new.1">
+        <source>Create a new map</source>
+        <target>Eine neue Map anlegen</target>
+      </trans-unit>
+
+      <trans-unit id="tl_map.show.0">
+        <source>Map details</source>
+        <target>Map details</target>
+      </trans-unit>
+      <trans-unit id="tl_map.show.1">
+        <source>Show details of map ID %s</source>
+        <target>Details der Map ID %s anzeigen</target>
+      </trans-unit>
+
+      <trans-unit id="tl_map.edit.0">
+        <source>Edit map points</source>
+        <target>Map-Points bearbeiten</target>
+      </trans-unit>
+      <trans-unit id="tl_map.edit.1">
+        <source>Edit map points of map ID %s</source>
+        <target>Map-Points auf Map ID %s bearbeiten</target>
+      </trans-unit>
+
+      <trans-unit id="tl_map.editheader.0">
+        <source>Edit map</source>
+        <target>Map bearbeiten</target>
+      </trans-unit>
+      <trans-unit id="tl_map.editheader.1">
+        <source>Edit configuration of map ID %s</source>
+        <target>Map ID %s bearbeiten</target>
+      </trans-unit>
+
+      <trans-unit id="tl_map.copy.0">
+        <source>Copy map</source>
+        <target>Map kopieren</target>
+      </trans-unit>
+      <trans-unit id="tl_map.copy.1">
+        <source>Copy map ID %s</source>
+        <target>Map ID %s kopieren</target>
+      </trans-unit>
+
+      <trans-unit id="tl_map.delete.0">
+        <source>Delete map</source>
+        <target>Map löschen</target>
+      </trans-unit>
+      <trans-unit id="tl_map.delete.1">
+        <source>Delete map ID %s</source>
+        <target>Map ID %s löschen</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

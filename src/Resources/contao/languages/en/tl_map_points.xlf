@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file datatype="plaintext" original="src/Resources/contao/languages/en/tl_map_points.xlf" source-language="en" target-language="en">
+    <body>
+      <!-- Fields -->
+      <trans-unit id="tl_map_points.title.0">
+        <source>Map-Point Name</source>
+        <target>Map-Point Name</target>
+      </trans-unit>
+      <trans-unit id="tl_map_points.title.1">
+        <source>Please enter the map-point title.</source>
+        <target>Please enter the map-point title here.</target>
+      </trans-unit>
+
+      <trans-unit id="tl_map_points.image.0">
+        <source>Map-Point Image</source>
+        <target>Map-Point Image</target>
+      </trans-unit>
+      <trans-unit id="tl_map_points.image.1">
+        <source>Map-point image.</source>
+        <target>Please select an image for this marker.</target>
+      </trans-unit>
+
+      <trans-unit id="tl_map_points.description.0">
+        <source>Description</source>
+        <target>Description</target>
+      </trans-unit>
+      <trans-unit id="tl_map_points.description.1">
+        <source>Map-point description.</source>
+        <target>Please enter a description for this location.</target>
+      </trans-unit>
+
+      <trans-unit id="tl_map_points.position.0">
+        <source>Position</source>
+        <target>Coordinates Position</target>
+      </trans-unit>
+      <trans-unit id="tl_map_points.position.1">
+        <source>Map-point position coordinates.</source>
+        <target>Define geographical coordinates (latitude and longitude) for this point.</target>
+      </trans-unit>
+
+      <trans-unit id="tl_map_points.info.0">
+        <source>Infobubble</source>
+        <target>Popup Info Bubble</target>
+      </trans-unit>
+      <trans-unit id="tl_map_points.info.1">
+        <source>On / Off</source>
+        <target>Enable / Disable interactive text popup envelope window.</target>
+      </trans-unit>
+
+      <trans-unit id="tl_map_points.toggle.0">
+        <source>ON/OFF</source>
+        <target>ON/OFF</target>
+      </trans-unit>
+      <trans-unit id="tl_map_points.toggle.1">
+        <source>Toggle visibility</source>
+        <target>Toggle visibility status</target>
+      </trans-unit>
+
+      <!-- Legends -->
+      <trans-unit id="tl_map_points.title_legend">
+        <source>Map-Point settings</source>
+        <target>Map-Point Settings</target>
+      </trans-unit>
+      <trans-unit id="tl_map_points.title_legends">
+        <source>Map-Points configuration</source>
+        <target>Map-Points Configuration</target>
+      </trans-unit>
+      <trans-unit id="tl_map_points.image_legend">
+        <source>Image settings</source>
+        <target>Media Assets</target>
+      </trans-unit>
+      <trans-unit id="tl_map_points.description_legend">
+        <source>Descriptions</source>
+        <target>Descriptions Settings</target>
+      </trans-unit>
+
+      <!-- Buttons -->
+      <trans-unit id="tl_map_points.new.0">
+        <source>New Map-Point</source>
+        <target>New Location Marker</target>
+      </trans-unit>
+      <trans-unit id="tl_map_points.new.1">
+        <source>Create a new map-point</source>
+        <target>Create a completely new map location marker</target>
+      </trans-unit>
+
+      <trans-unit id="tl_map_points.show.0">
+        <source>Map-Point details</source>
+        <target>Marker details</target>
+      </trans-unit>
+      <trans-unit id="tl_map_points.show.1">
+        <source>Show details of map-point ID %s</source>
+        <target>Show properties parameters profile logs dump for location ID %s</target>
+      </trans-unit>
+
+      <trans-unit id="tl_map_points.edit.0">
+        <source>Edit map-point</source>
+        <target>Modify location parameters</target>
+      </trans-unit>
+      <trans-unit id="tl_map_points.edit.1">
+        <source>Edit map-point ID %s</source>
+        <target>Open fields workspace layout configuration inputs for point row ID %s</target>
+      </trans-unit>
+
+      <trans-unit id="tl_map_points.copy.0">
+        <source>Copy map-point</source>
+        <target>Duplicate location marker</target>
+      </trans-unit>
+      <trans-unit id="tl_map_points.copy.1">
+        <source>Copy map-point ID %s</source>
+        <target>Clone entire dataset definitions fields properties profiles matching marker ID %s</target>
+      </trans-unit>
+
+      <trans-unit id="tl_map_points.delete.0">
+        <source>Delete map-point</source>
+        <target>Remove marker asset</target>
+      </trans-unit>
+      <trans-unit id="tl_map_points.delete.1">
+        <source>Delete map-point ID %s</source>
+        <target>Permanently drop record target entry from location data tables matching key ID %s</target>
+      </trans-unit>
+
+      <trans-unit id="tl_map_points.cut.0">
+        <source>Move map-point</source>
+        <target>Shift locations index tree position</target>
+      </trans-unit>
+      <trans-unit id="tl_map_points.cut.1">
+        <source>Move map-point ID %s</source>
+        <target>Cut and relocate hierarchical sort ordering indices positions for location node ID %s</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

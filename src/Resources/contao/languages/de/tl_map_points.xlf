@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file datatype="plaintext" original="src/Resources/contao/languages/de/tl_map_points.xlf" source-language="en" target-language="de">
+    <body>
+      <!-- Fields -->
+      <trans-unit id="tl_map_points.title.0">
+        <source>Map-Point Name</source>
+        <target>Map-Point Name</target>
+      </trans-unit>
+      <trans-unit id="tl_map_points.title.1">
+        <source>Please enter the map-point title.</source>
+        <target>Geben Sie hier den Map-Point Title ein.</target>
+      </trans-unit>
+
+      <trans-unit id="tl_map_points.image.0">
+        <source>Map-Point Image</source>
+        <target>Map-Point Bild</target>
+      </trans-unit>
+      <trans-unit id="tl_map_points.image.1">
+        <source>Map-point image.</source>
+        <target>Map-Point Bild.</target>
+      </trans-unit>
+
+      <trans-unit id="tl_map_points.description.0">
+        <source>Description</source>
+        <target>Beschreibung</target>
+      </trans-unit>
+      <trans-unit id="tl_map_points.description.1">
+        <source>Map-point description.</source>
+        <target>Map-Point Beschreibung.</target>
+      </trans-unit>
+
+      <trans-unit id="tl_map_points.position.0">
+        <source>Position</source>
+        <target>Position</target>
+      </trans-unit>
+      <trans-unit id="tl_map_points.position.1">
+        <source>Map-point position coordinates.</source>
+        <target>Map-Point Position.</target>
+      </trans-unit>
+
+      <trans-unit id="tl_map_points.info.0">
+        <source>Infobubble</source>
+        <target>Infobubble</target>
+      </trans-unit>
+      <trans-unit id="tl_map_points.info.1">
+        <source>On / Off</source>
+        <target>An / Aus</target>
+      </trans-unit>
+
+      <trans-unit id="tl_map_points.toggle.0">
+        <source>ON/OFF</source>
+        <target>AN/AUS</target>
+      </trans-unit>
+      <trans-unit id="tl_map_points.toggle.1">
+        <source>Toggle visibility</source>
+        <target>An / Aus</target>
+      </trans-unit>
+
+      <!-- Legends -->
+      <trans-unit id="tl_map_points.title_legend">
+        <source>Map-Point settings</source>
+        <target>Map-Point</target>
+      </trans-unit>
+      <trans-unit id="tl_map_points.title_legends">
+        <source>Map-Points configuration</source>
+        <target>Map-Points</target>
+      </trans-unit>
+      <trans-unit id="tl_map_points.image_legend">
+        <source>Image settings</source>
+        <target>Image</target>
+      </trans-unit>
+      <trans-unit id="tl_map_points.description_legend">
+        <source>Descriptions</source>
+        <target>Beschreibungen</target>
+      </trans-unit>
+
+      <!-- Buttons -->
+      <trans-unit id="tl_map_points.new.0">
+        <source>New Map-Point</source>
+        <target>Neuer Map-Point</target>
+      </trans-unit>
+      <trans-unit id="tl_map_points.new.1">
+        <source>Create a new map-point</source>
+        <target>Einen neuen Map-Point anlegen</target>
+      </trans-unit>
+
+      <trans-unit id="tl_map_points.show.0">
+        <source>Map-Point details</source>
+        <target>Map-Point details</target>
+      </trans-unit>
+      <trans-unit id="tl_map_points.show.1">
+        <source>Show details of map-point ID %s</source>
+        <target>Details des Map-Point ID %s</target>
+      </trans-unit>
+
+      <trans-unit id="tl_map_points.edit.0">
+        <source>Edit map-point</source>
+        <target>Map-Point bearbeiten</target>
+      </trans-unit>
+      <trans-unit id="tl_map_points.edit.1">
+        <source>Edit map-point ID %s</source>
+        <target>Map-Point ID %s bearbeiten</target>
+      </trans-unit>
+
+      <trans-unit id="tl_map_points.copy.0">
+        <source>Copy map-point</source>
+        <target>Map-Point kopieren</target>
+      </trans-unit>
+      <trans-unit id="tl_map_points.copy.1">
+        <source>Copy map-point ID %s</source>
+        <target>Map-Point ID %s kopieren</target>
+      </trans-unit>
+
+      <trans-unit id="tl_map_points.delete.0">
+        <source>Delete map-point</source>
+        <target>Map-Point löschen</target>
+      </trans-unit>
+      <trans-unit id="tl_map_points.delete.1">
+        <source>Delete map-point ID %s</source>
+        <target>Map-Point ID %s löschen</target>
+      </trans-unit>
+
+      <trans-unit id="tl_map_points.cut.0">
+        <source>Move map-point</source>
+        <target>Map-Point Verschieben</target>
+      </trans-unit>
+      <trans-unit id="tl_map_points.cut.1">
+        <source>Move map-point ID %s</source>
+        <target>Verschiebe Map-Point ID %s</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
