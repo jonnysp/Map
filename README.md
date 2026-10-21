@@ -1,2 +1,2 @@
 # Map
-Adds a Tilemap to Contao 5
+Adds a Tilemap to Contao
